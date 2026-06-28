@@ -814,6 +814,42 @@
         .intro-title { font-size: 4.4em; line-height: 0.88; font-weight: 900; letter-spacing: 0; color: #fff9e7; text-shadow: 0 4px 18px rgba(0,0,0,0.6); }
         .intro-story { max-width: 640px; color: rgba(245,239,226,0.84); font-size: 1.02em; line-height: 1.56; }
         .intro-setup { display: flex; flex-direction: column; gap: 12px; padding: 16px; border: 1px solid rgba(255,231,164,0.18); background: rgba(19,18,24,0.78); border-radius: 10px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.04); }
+        .intro-mode-select { display: grid; grid-template-columns: repeat(2, minmax(150px, 1fr)); gap: 8px; width: 100%; }
+        .intro-mode-btn { border: 1px solid rgba(255,231,164,0.28); background: rgba(255,255,255,0.055); color: #f5efe2; border-radius: 7px; padding: 10px 12px; font-weight: 900; cursor: pointer; }
+        .intro-mode-btn.active { background: #d6a645; color: #21170e; border-color: #ffe2a3; }
+        .intro-network-panel { display: none; border: 1px solid rgba(112,196,160,0.32); border-radius: 7px; background: rgba(22,54,46,0.36); padding: 10px 11px; color: #d8eee5; font-size: 0.82em; line-height: 1.4; }
+        .intro-network-panel.active { display: block; }
+        .intro-network-section { display: flex; flex-direction: column; gap: 7px; }
+        .intro-network-section + .intro-network-section { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(216,238,229,0.16); }
+        .intro-network-heading { color: #fff3c8; font-weight: 900; letter-spacing: 0.04em; }
+        .intro-network-row { display: flex; gap: 7px; align-items: stretch; }
+        .intro-network-url { flex: 1; min-width: 0; padding: 8px 9px; border-radius: 6px; border: 1px solid rgba(255,243,200,0.24); background: rgba(0,0,0,0.28); color: #fff3c8; font-weight: 900; user-select: all; overflow-wrap: anywhere; }
+        .intro-network-input { flex: 1; min-width: 0; padding: 8px 9px; border-radius: 6px; border: 1px solid rgba(216,238,229,0.28); background: rgba(0,0,0,0.3); color: #f5efe2; font: inherit; }
+        .intro-network-action { flex: 0 0 auto; min-width: 76px; border-radius: 6px; border: 1px solid rgba(255,226,163,0.42); background: rgba(214,166,69,0.2); color: #fff3c8; font-weight: 900; cursor: pointer; }
+        .intro-network-action:hover { background: rgba(214,166,69,0.34); border-color: #ffe2a3; }
+        .intro-network-action:disabled, .intro-play:disabled, .intro-count-btn:disabled { opacity: 0.42; cursor: not-allowed; }
+        .intro-network-state { color: rgba(216,238,229,0.82); font-size: 0.92em; }
+        .intro-network-state.error { color: #ffb7ab; }
+        .intro-network-remote { display: none; }
+        #intro-screen-setup { display: flex; flex-direction: column; gap: 12px; }
+        .intro-lobby-players { display: grid; grid-template-columns: repeat(2, minmax(130px, 1fr)); gap: 7px; }
+        .intro-lobby-player { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 9px; border-radius: 6px; border: 1px solid rgba(216,238,229,0.18); background: rgba(0,0,0,0.24); }
+        .intro-lobby-player.host::after { content: "HOST"; color: #ffe2a3; font-size: 0.74em; font-weight: 900; }
+        .intro-lobby-seat { color: rgba(216,238,229,0.62); font-size: 0.78em; }
+        .network-public-stats { min-height: 58px; justify-content: center; align-items: center; text-align: center; }
+        .network-public-stats .res-row { justify-content: center; font-size: 1.05em; }
+        body.network-private-wait #bank-contracts-overlay,
+        body.network-private-wait #bandit-guilds-overlay,
+        body.network-private-wait #market-cards-overlay,
+        body.network-private-wait #thief-cards-overlay,
+        body.network-private-wait #tavern-cards-overlay,
+        body.network-private-wait #wild-overlay,
+        body.network-private-wait #trade-overlay,
+        body.network-private-wait #additional-action-overlay,
+        body.network-private-wait #choice-modal { display: none !important; }
+        .network-status-pill { position: fixed; top: 10px; right: 84px; z-index: 2190; display: none; align-items: center; gap: 6px; height: 32px; padding: 4px 9px; border-radius: 7px; border: 1px solid rgba(112,196,160,0.42); background: rgba(17,52,43,0.92); color: #d8eee5; font-size: 0.72em; font-weight: 900; }
+        .network-status-pill.active { display: inline-flex; }
+        .network-status-dot { width: 7px; height: 7px; border-radius: 50%; background: #72d8a8; box-shadow: 0 0 8px rgba(114,216,168,0.72); }
         .intro-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
         .intro-player-count { display: grid; grid-template-columns: repeat(3, minmax(72px, 1fr)); gap: 8px; width: 100%; }
         .intro-count-btn { border: 1px solid rgba(255,231,164,0.28); background: rgba(255,255,255,0.06); color: #f5efe2; border-radius: 7px; padding: 10px 12px; font-weight: bold; cursor: pointer; }
@@ -846,6 +882,7 @@
 </head>
 <body>
 <button id="global-exit-btn" onclick="game.exitGame()" title="Exit Rogue Miners">EXIT</button>
+<div id="network-status-pill" class="network-status-pill"><span class="network-status-dot"></span><span id="network-status-text">LAN</span></div>
 <div id="intro-page">
     <div class="intro-shell">
         <div class="intro-art" aria-label="Rogue Miners cover art"></div>
@@ -860,17 +897,60 @@
             </div>
             <div class="intro-setup">
                 <div class="intro-kicker">Setup</div>
-                <div class="intro-player-count">
-                    <button class="intro-count-btn" data-count="2" onclick="game.setIntroPlayerCount(2)">2 Players</button>
-                    <button class="intro-count-btn" data-count="3" onclick="game.setIntroPlayerCount(3)">3 Players</button>
-                    <button class="intro-count-btn active" data-count="4" onclick="game.setIntroPlayerCount(4)">4 Players</button>
+                <div class="intro-mode-select">
+                    <button class="intro-mode-btn active" data-mode="screen" onclick="game.setIntroGameMode('screen')">SHARED SCREEN</button>
+                    <button class="intro-mode-btn" data-mode="network" onclick="game.setIntroGameMode('network')">SHARED NETWORK</button>
                 </div>
-                <div id="intro-name-grid" class="intro-name-grid"></div>
-                <div class="intro-rules-note">For 3 players, the last action spot in every board row is crossed out. For 2 players, the last two spots are crossed out and unavailable.</div>
-                <div class="intro-actions">
-                    <button class="intro-play" onclick="game.startIntroGame()">PLAY</button>
-                    <button class="intro-rules-btn" onclick="game.openRulesReference()">RULES TRUTH</button>
+                <div id="intro-network-panel" class="intro-network-panel">
+                    <div class="intro-mode-select">
+                        <button class="intro-mode-btn active" data-network-role="host" onclick="game.setNetworkRole('host')">HOST</button>
+                        <button class="intro-mode-btn" data-network-role="join" onclick="game.setNetworkRole('join')">JOIN THE GAME</button>
+                    </div>
+                    <div id="intro-network-host-form" class="intro-network-section">
+                        <div class="intro-network-heading">CREATE NETWORK LOBBY</div>
+                        <div class="intro-network-row">
+                            <input id="intro-network-host-name" class="intro-network-input" maxlength="18" placeholder="Your player name">
+                            <button class="intro-network-action" onclick="game.createNetworkLobby()">CREATE LOBBY</button>
+                        </div>
+                    </div>
+                    <div id="intro-network-join-form" class="intro-network-section" style="display:none;">
+                        <div class="intro-network-heading">JOIN NETWORK LOBBY</div>
+                        <input id="intro-network-join-name" class="intro-network-input" maxlength="18" placeholder="Your player name">
+                        <div class="intro-network-row">
+                            <input id="intro-network-join-input" class="intro-network-input" placeholder="Host address or link">
+                            <input id="intro-network-room-input" class="intro-network-input" maxlength="5" placeholder="Room code">
+                            <button class="intro-network-action" onclick="game.joinNetworkLobby()">JOIN LOBBY</button>
+                        </div>
+                    </div>
+                    <div id="intro-network-lobby" class="intro-network-section" style="display:none;">
+                        <div class="intro-network-heading">NETWORK LOBBY</div>
+                        <div class="intro-network-row">
+                            <div id="intro-network-url" class="intro-network-url">Detecting LAN address...</div>
+                            <button class="intro-network-action" onclick="game.copyNetworkAddress()">COPY</button>
+                        </div>
+                        <div class="intro-network-row">
+                            <div class="intro-network-url">ROOM CODE: <strong id="intro-network-room-code">-----</strong></div>
+                            <button class="intro-network-action" onclick="game.copyNetworkRoomCode()">COPY CODE</button>
+                        </div>
+                        <div id="intro-network-lobby-players" class="intro-lobby-players"></div>
+                        <button id="intro-network-start" class="intro-play" onclick="game.startNetworkLobbyGame()">START NETWORK GAME</button>
+                        <div id="intro-network-lobby-state" class="intro-network-state">Waiting for players...</div>
+                    </div>
+                    <div id="intro-network-message" class="intro-network-state"></div>
                 </div>
+                <div id="intro-screen-setup">
+                    <div class="intro-player-count">
+                        <button class="intro-count-btn" data-count="2" onclick="game.setIntroPlayerCount(2)">2 Players</button>
+                        <button class="intro-count-btn" data-count="3" onclick="game.setIntroPlayerCount(3)">3 Players</button>
+                        <button class="intro-count-btn active" data-count="4" onclick="game.setIntroPlayerCount(4)">4 Players</button>
+                    </div>
+                    <div id="intro-name-grid" class="intro-name-grid"></div>
+                    <div class="intro-rules-note">For 3 players, the last action spot in every board row is crossed out. For 2 players, the last two spots are crossed out and unavailable.</div>
+                    <div class="intro-actions">
+                        <button class="intro-play" onclick="game.startIntroGame()">PLAY</button>
+                    </div>
+                </div>
+                <button class="intro-rules-btn" onclick="game.openRulesReference()">RULES TRUTH</button>
             </div>
         </div>
     </div>
@@ -2147,6 +2227,30 @@
             this.players = Array.from({length: 4}, (_, i) => createInitialPlayer(i));
             this.gameStarted = false;
             this.introPlayerCount = 4;
+            this.introGameMode = "screen";
+            this.networkRole = "host";
+            this.networkRoomCode = "";
+            this.networkSeatIdx = null;
+            this.networkLobby = null;
+            this.networkLobbyTimer = null;
+            this.networkActionVersion = 0;
+            this.networkActionTimer = null;
+            this.networkActionBusy = false;
+            this.networkAwaitingAction = false;
+            this.networkExecutingRemoteAction = false;
+            this.networkPhaseSplashEvent = null;
+            this.networkPhaseSplashCounter = 0;
+            this.networkSeenPhaseSplashId = null;
+            this.networkEnabled = false;
+            this.networkAvailable = false;
+            this.networkConnected = false;
+            this.networkInfo = null;
+            this.networkVersion = 0;
+            this.networkApplying = false;
+            this.networkPushPending = false;
+            this.networkPushTimer = null;
+            this.networkPollTimer = null;
+            this.networkClientId = this.createNetworkClientId();
             this.phase = "PLANNING";
             this.activePIdx = 0;
             this.firstPlayerIdx = 0;
@@ -2201,6 +2305,12 @@
             this.pendingOnboardingTip = false;
             this.pendingProjectedScoring = false;
             this.endOfDayBanditsProcessed = false;
+            this.currentWildShift = null;
+            this.currentWildGain = null;
+            this.currentWildQueue = null;
+            this.currentWildBandit = null;
+            this.currentWildMineLog = null;
+            this.currentWildPlayerIdx = null;
             this.gameLog = [];
             this.prestigeLog = [];
             this.gameStats = null;
@@ -2582,7 +2692,7 @@
                 "nightGuardCleanupQueue", "finalBoardSnapshot", "board", "boardMeta", "bankContracts", "bankDecks", "bankDiscard", "banditMarket",
                 "marketCardsExpanded", "thiefCardsExpanded", "marketCards", "marketDeck", "marketDiscard", "thiefCards", "thiefDeck",
                 "thiefDiscard", "tavernDeck", "tavernBag", "tavernOfferDice", "currentWildShift", "currentWildGain", "currentWildQueue",
-                "currentWildBandit", "currentWildMineLog"
+                "currentWildBandit", "currentWildMineLog", "currentWildPlayerIdx"
             ];
         }
         cloneUndoValue(value) {
@@ -2926,6 +3036,443 @@
         getPlayerLabelHTML(playerIdx) {
             return `<span style="color:${P_COLORS[playerIdx]}; font-weight:bold;">${this.getPlayerLabel(playerIdx)}</span>`;
         }
+        createNetworkClientId() {
+            const saved = sessionStorage.getItem("rogueMinersNetworkClientId");
+            if (saved) return saved;
+            const id = `rm-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+            sessionStorage.setItem("rogueMinersNetworkClientId", id);
+            return id;
+        }
+        isNetworkLeader() {
+            return ["127.0.0.1", "localhost", "::1"].includes(location.hostname);
+        }
+        setIntroGameMode(mode) {
+            this.introGameMode = mode === "network" ? "network" : "screen";
+            this.networkEnabled = this.introGameMode === "network";
+            if (this.networkEnabled && !this.networkLobby) this.networkRole = "host";
+            this.renderIntroSetup();
+            this.renderNetworkStatus();
+            if (this.networkEnabled && this.networkRoomCode) this.pollNetworkLobby();
+        }
+        setNetworkRole(role) {
+            if (this.networkLobby) return;
+            this.networkRole = role === "join" ? "join" : "host";
+            this.renderNetworkStatus();
+        }
+        setNetworkMessage(text, error = false) {
+            const message = document.getElementById('intro-network-message');
+            if (!message) return;
+            message.classList.toggle('error', !!error);
+            message.textContent = text || "";
+        }
+        createNetworkLobby() {
+            const name = `${document.getElementById('intro-network-host-name')?.value || ""}`.trim();
+            if (!name) { this.setNetworkMessage("Enter your player name first.", true); return; }
+            this.setNetworkMessage("Creating lobby...");
+            fetch('/api/lobby/create', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ clientId: this.networkClientId, name })
+            }).then(response => response.json().then(data => response.ok ? data : Promise.reject(new Error(data.error || "Could not create lobby"))))
+                .then(lobby => this.acceptNetworkLobby(lobby, "host"))
+                .catch(error => this.setNetworkMessage(error.message, true));
+        }
+        joinNetworkLobby() {
+            const name = `${document.getElementById('intro-network-join-name')?.value || ""}`.trim();
+            const roomCode = `${document.getElementById('intro-network-room-input')?.value || ""}`.trim().toUpperCase();
+            const target = this.normalizeNetworkAddress(document.getElementById('intro-network-join-input')?.value || location.origin);
+            if (!name) { this.setNetworkMessage("Enter your player name.", true); return; }
+            if (roomCode.length !== 5) { this.setNetworkMessage("Enter the 5-character room code.", true); return; }
+            if (!target) { this.setNetworkMessage("Enter the host address shown in their lobby.", true); return; }
+            const ownLanOrigin = this.networkInfo?.lanUrl ? new URL(this.networkInfo.lanUrl).origin : "";
+            if (target.origin !== location.origin && target.origin !== ownLanOrigin) {
+                this.setNetworkMessage("Opening the host lobby...");
+                const joinUrl = new URL(target.href);
+                joinUrl.searchParams.set('networkJoin', '1');
+                joinUrl.searchParams.set('name', name);
+                joinUrl.searchParams.set('room', roomCode);
+                const navigate = () => { location.href = joinUrl.href; };
+                if (this.isNetworkLeader()) fetch('/api/shutdown', { method: 'POST', keepalive: true }).finally(() => setTimeout(navigate, 120));
+                else navigate();
+                return;
+            }
+            this.performNetworkLobbyJoin(name, roomCode);
+        }
+        performNetworkLobbyJoin(name, roomCode) {
+            this.setNetworkMessage("Joining lobby...");
+            fetch('/api/lobby/join', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ clientId: this.networkClientId, name, roomCode })
+            }).then(response => response.json().then(data => response.ok ? data : Promise.reject(new Error(data.error || "Could not join lobby"))))
+                .then(lobby => this.acceptNetworkLobby(lobby, "join"))
+                .catch(error => this.setNetworkMessage(error.message, true));
+        }
+        acceptNetworkLobby(lobby, role) {
+            this.introGameMode = "network";
+            this.networkEnabled = true;
+            this.networkRole = role;
+            this.networkLobby = lobby;
+            this.networkRoomCode = lobby.roomCode || "";
+            this.networkSeatIdx = Number.isInteger(lobby.seat) ? lobby.seat : null;
+            this.networkConnected = true;
+            this.setNetworkMessage("");
+            clearInterval(this.networkLobbyTimer);
+            this.networkLobbyTimer = setInterval(() => this.pollNetworkLobby(), 700);
+            if (role === "host") {
+                clearInterval(this.networkActionTimer);
+                this.networkActionTimer = setInterval(() => this.pollNetworkActions(), 180);
+            }
+            this.renderIntroSetup();
+            this.renderNetworkLobby();
+            if (lobby.started) this.pollNetworkState(true);
+        }
+        pollNetworkLobby() {
+            if (!this.networkEnabled || !this.networkRoomCode) return;
+            fetch(`/api/lobby?client=${encodeURIComponent(this.networkClientId)}&room=${encodeURIComponent(this.networkRoomCode)}&_=${Date.now()}`, { cache: 'no-store' })
+                .then(response => response.json().then(data => response.ok ? data : Promise.reject(new Error(data.error || "Lobby disconnected"))))
+                .then(lobby => {
+                    this.networkLobby = lobby;
+                    this.networkSeatIdx = Number.isInteger(lobby.seat) ? lobby.seat : this.networkSeatIdx;
+                    this.networkConnected = true;
+                    this.renderNetworkLobby();
+                    if (lobby.started) this.pollNetworkState(true);
+                })
+                .catch(error => { this.networkConnected = false; this.setNetworkMessage(error.message, true); this.renderNetworkStatus(); });
+        }
+        renderNetworkLobby() {
+            const lobby = this.networkLobby;
+            const lobbyPanel = document.getElementById('intro-network-lobby');
+            if (lobbyPanel) lobbyPanel.style.display = lobby ? 'flex' : 'none';
+            const room = document.getElementById('intro-network-room-code');
+            if (room) room.textContent = lobby?.roomCode || "-----";
+            const url = document.getElementById('intro-network-url');
+            if (url) url.textContent = lobby?.lanUrl || this.networkInfo?.lanUrl || location.origin;
+            const list = document.getElementById('intro-network-lobby-players');
+            if (list) list.innerHTML = (lobby?.players || []).map(player => `<div class="intro-lobby-player ${player.isHost ? 'host' : ''}"><span><strong>${escapeHTML(player.name)}</strong><br><span class="intro-lobby-seat">Player ${player.seat + 1}</span></span></div>`).join('');
+            const start = document.getElementById('intro-network-start');
+            if (start) {
+                start.style.display = lobby?.isHost ? '' : 'none';
+                start.disabled = !lobby || lobby.players.length < 2 || lobby.started;
+            }
+            const state = document.getElementById('intro-network-lobby-state');
+            if (state) state.textContent = lobby?.started
+                ? "Game started. Synchronizing your private player view..."
+                : (lobby?.isHost ? `${lobby.players.length}/4 players connected. Start when 2 to 4 players are ready.` : "Waiting for the host to start the game...");
+        }
+        copyNetworkRoomCode() {
+            if (!this.networkRoomCode) return;
+            this.copyNetworkAddressFallback(this.networkRoomCode, () => this.setNetworkMessage("Room code copied."));
+        }
+        startNetworkLobbyGame() {
+            if (!this.networkLobby?.isHost || this.networkLobby.players.length < 2) return;
+            fetch('/api/lobby/start', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ clientId: this.networkClientId, roomCode: this.networkRoomCode })
+            }).then(response => response.json().then(data => response.ok ? data : Promise.reject(new Error(data.error || "Could not start game"))))
+                .then(lobby => {
+                    this.networkLobby = lobby;
+                    const names = [...lobby.players].sort((a, b) => a.seat - b.seat).map(player => player.name);
+                    this.startIntroGame(names);
+                })
+                .catch(error => this.setNetworkMessage(error.message, true));
+        }
+        copyNetworkAddress() {
+            const address = this.networkLobby?.lanUrl || this.networkInfo?.lanUrl || "";
+            if (!address) {
+                this.showToast("The LAN address is not ready yet.", "warn");
+                return;
+            }
+            const copied = () => {
+                const message = document.getElementById('intro-network-message');
+                if (message) {
+                    message.classList.remove('error');
+                    message.textContent = "Host link copied. Send it to the other players.";
+                }
+            };
+            if (navigator.clipboard?.writeText) {
+                navigator.clipboard.writeText(address).then(copied).catch(() => this.copyNetworkAddressFallback(address, copied));
+            } else {
+                this.copyNetworkAddressFallback(address, copied);
+            }
+        }
+        copyNetworkAddressFallback(address, onCopied) {
+            const area = document.createElement('textarea');
+            area.value = address;
+            area.style.position = 'fixed';
+            area.style.opacity = '0';
+            document.body.appendChild(area);
+            area.select();
+            try { document.execCommand('copy'); onCopied(); }
+            finally { area.remove(); }
+        }
+        normalizeNetworkAddress(raw) {
+            let value = `${raw || ""}`.trim();
+            if (!value) return null;
+            if (!/^https?:\/\//i.test(value)) value = `http://${value}`;
+            try {
+                const url = new URL(value);
+                if (!url.port) url.port = `${this.networkInfo?.port || 37621}`;
+                url.pathname = '/';
+                url.search = '';
+                url.hash = '';
+                return url;
+            } catch { return null; }
+        }
+        joinNetworkGame() {
+            const input = document.getElementById('intro-network-join-input');
+            const message = document.getElementById('intro-network-message');
+            const target = this.normalizeNetworkAddress(input?.value);
+            if (!target) {
+                if (message) { message.classList.add('error'); message.textContent = "Enter the host link or IP address shown on the host computer."; }
+                return;
+            }
+            if (message) { message.classList.remove('error'); message.textContent = "Checking host connection..."; }
+            fetch(`${target.origin}/api/info`, { cache: 'no-store' })
+                .then(response => response.ok ? response.json() : Promise.reject(new Error("Host did not answer")))
+                .then(() => {
+                    if (message) message.textContent = "Connected. Opening the host game...";
+                    const ownLanOrigin = this.networkInfo?.lanUrl ? new URL(this.networkInfo.lanUrl).origin : "";
+                    if (target.origin === location.origin || target.origin === ownLanOrigin) {
+                        this.setIntroGameMode('network');
+                        return;
+                    }
+                    const navigate = () => { location.href = target.href; };
+                    if (this.isNetworkLeader()) {
+                        fetch('/api/shutdown', { method: 'POST', keepalive: true }).finally(() => setTimeout(navigate, 100));
+                    } else {
+                        navigate();
+                    }
+                })
+                .catch(() => {
+                    if (message) {
+                        message.classList.add('error');
+                        message.textContent = "Could not reach that host. Check the address, Wi-Fi, and Windows Firewall private-network permission.";
+                    }
+                });
+        }
+        renderNetworkStatus() {
+            document.querySelectorAll('.intro-mode-btn').forEach(button => {
+                if (button.dataset.mode) button.classList.toggle('active', button.dataset.mode === this.introGameMode);
+            });
+            document.querySelectorAll('[data-network-role]').forEach(button => button.classList.toggle('active', button.dataset.networkRole === this.networkRole));
+            const panel = document.getElementById('intro-network-panel');
+            if (panel) panel.classList.toggle('active', this.introGameMode === "network");
+            const screenSetup = document.getElementById('intro-screen-setup');
+            if (screenSetup) screenSetup.style.display = this.introGameMode === "screen" ? 'flex' : 'none';
+            const hostForm = document.getElementById('intro-network-host-form');
+            const joinForm = document.getElementById('intro-network-join-form');
+            if (hostForm) hostForm.style.display = this.introGameMode === "network" && !this.networkLobby && this.networkRole === "host" ? 'flex' : 'none';
+            if (joinForm) joinForm.style.display = this.introGameMode === "network" && !this.networkLobby && this.networkRole === "join" ? 'flex' : 'none';
+            this.renderNetworkLobby();
+            const pill = document.getElementById('network-status-pill');
+            const statusText = document.getElementById('network-status-text');
+            if (pill) pill.classList.toggle('active', !!this.networkEnabled && this.gameStarted);
+            if (statusText) statusText.textContent = this.networkConnected
+                ? `LAN · PLAYER ${(this.networkSeatIdx ?? 0) + 1}`
+                : "LAN CONNECTING";
+        }
+        initNetworkTransport() {
+            if (!/^https?:$/i.test(location.protocol)) {
+                this.networkAvailable = false;
+                this.renderNetworkStatus();
+                return;
+            }
+            fetch('/api/info', { cache: 'no-store' })
+                .then(response => response.ok ? response.json() : Promise.reject(new Error("LAN service unavailable")))
+                .then(info => {
+                    this.networkAvailable = true;
+                    this.networkConnected = true;
+                    this.networkInfo = info;
+                    const params = new URLSearchParams(location.search);
+                    if (params.get('networkJoin') === '1') {
+                        this.introGameMode = "network";
+                        this.networkEnabled = true;
+                        this.networkRole = "join";
+                        this.renderIntroSetup();
+                        this.performNetworkLobbyJoin(params.get('name') || "Player", (params.get('room') || "").toUpperCase());
+                    }
+                    this.renderNetworkStatus();
+                    this.scheduleNetworkBroadcast();
+                })
+                .catch(() => {
+                    this.networkAvailable = false;
+                    this.networkConnected = false;
+                    this.renderNetworkStatus();
+                });
+            clearInterval(this.networkPollTimer);
+            this.networkPollTimer = setInterval(() => this.pollNetworkState(false), 500);
+        }
+        getNetworkStateKeys() {
+            const localOnly = new Set([
+                "selectedOwnedItem", "selectedOwnedArea", "ownedAreaTabs", "pendingFinalScoreDetails",
+                "pendingPrestigeLogDetails", "pendingGameStatsDetails", "pendingGameAnalysisDetails",
+                "pendingRulesReference", "pendingOnboardingTip", "pendingProjectedScoring"
+            ]);
+            return Array.from(new Set([
+                "gameStarted", "introPlayerCount", "playerCount", "finalScoringApplied", "finalScoringRowsCache",
+                ...this.getUndoStateKeys(), "_lastBanditKeepChoices", "networkPhaseSplashEvent"
+            ])).filter(key => !localOnly.has(key));
+        }
+        captureNetworkState() {
+            const state = { schema: 1, networkEnabled: true, introGameMode: "network" };
+            this.getNetworkStateKeys().forEach(key => { state[key] = this.cloneUndoValue(this[key]); });
+            return state;
+        }
+        applyNetworkState(state) {
+            if (!state || state.schema !== 1) return;
+            const incomingSplash = state.networkPhaseSplashEvent;
+            this.networkApplying = true;
+            this.networkEnabled = true;
+            this.introGameMode = "network";
+            this.networkAwaitingAction = false;
+            this.getNetworkStateKeys().forEach(key => {
+                if (Object.prototype.hasOwnProperty.call(state, key)) this[key] = this.restoreUndoValue(state[key]);
+            });
+            this.undoStack = [];
+            const wild = document.getElementById('wild-overlay');
+            const trade = document.getElementById('trade-overlay');
+            if (wild) wild.style.display = this.currentWildShift ? 'flex' : 'none';
+            if (trade && !this.tradeSource && !(this.tradeSelection || []).length) trade.style.display = 'none';
+            this.renderIntroSetup();
+            this.render();
+            this.networkApplying = false;
+            if (incomingSplash?.id && incomingSplash.id !== this.networkSeenPhaseSplashId) {
+                this.networkSeenPhaseSplashId = incomingSplash.id;
+                this.showPhaseSplash(incomingSplash.kind, false);
+            }
+        }
+        pollNetworkState(immediate = false) {
+            if (!this.networkEnabled || !this.networkAvailable || !this.networkRoomCode || !this.networkLobby?.started || this.networkPushPending) return;
+            fetch(`/api/state?since=${this.networkVersion}&client=${encodeURIComponent(this.networkClientId)}&room=${encodeURIComponent(this.networkRoomCode)}&_=${Date.now()}`, { cache: 'no-store' })
+                .then(response => {
+                    if (response.status === 204) return null;
+                    if (!response.ok) throw new Error("LAN state request failed");
+                    return response.json();
+                })
+                .then(message => {
+                    if (!message) return;
+                    this.networkConnected = true;
+                    this.networkVersion = Math.max(this.networkVersion, message.version || 0);
+                    const payload = message.payload;
+                    if (payload?.source !== this.networkClientId && payload?.state) this.applyNetworkState(payload.state);
+                    this.renderNetworkStatus();
+                })
+                .catch(() => {
+                    this.networkConnected = false;
+                    this.renderNetworkStatus();
+                });
+        }
+        scheduleNetworkBroadcast() {
+            if (!this.networkEnabled || this.networkRole !== "host" || !this.networkAvailable || this.networkApplying || !this.gameStarted) return;
+            this.networkPushPending = true;
+            clearTimeout(this.networkPushTimer);
+            this.networkPushTimer = setTimeout(() => this.broadcastNetworkState(), 80);
+        }
+        broadcastNetworkState() {
+            if (!this.networkEnabled || this.networkRole !== "host" || !this.networkAvailable || this.networkApplying || !this.gameStarted) {
+                this.networkPushPending = false;
+                return;
+            }
+            const payload = JSON.stringify({ source: this.networkClientId, roomCode: this.networkRoomCode, state: this.captureNetworkState() });
+            fetch('/api/state', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: payload,
+                cache: 'no-store'
+            })
+                .then(response => response.ok ? response.json() : Promise.reject(new Error("LAN update failed")))
+                .then(result => {
+                    this.networkPushPending = false;
+                    this.networkVersion = Math.max(this.networkVersion, result.version || 0);
+                    this.networkConnected = true;
+                    this.renderNetworkStatus();
+                })
+                .catch(() => {
+                    this.networkPushPending = false;
+                    this.networkConnected = false;
+                    this.renderNetworkStatus();
+                });
+        }
+        getNetworkExpectedActorIdx() {
+            if (this.currentWildShift && Number.isInteger(this.currentWildPlayerIdx)) return this.currentWildPlayerIdx;
+            const pendingCurrent = this.pendingKeepChoice?.current?.playerIdx
+                ?? this.pendingThiefTradeChoice?.current?.playerIdx
+                ?? this.pendingThiefLegacyChoice?.current?.playerIdx;
+            if (Number.isInteger(pendingCurrent)) return pendingCurrent;
+            const directPending = this.pendingSabotageBonus?.playerIdx
+                ?? this.pendingNightChoice?.playerIdx
+                ?? this.pendingAdditionalAction?.playerIdx
+                ?? this.pendingBankAction?.playerIdx
+                ?? this.pendingBanditAction?.playerIdx
+                ?? this.pendingMarketAction?.playerIdx
+                ?? this.pendingThiefAction?.playerIdx
+                ?? this.pendingTavernAction?.playerIdx
+                ?? this.pendingCrownlessPoolChoice?.playerIdx;
+            if (Number.isInteger(directPending)) return directPending;
+            if (this.pendingRoundSummary?.kind === "debt-reminder") return -1;
+            return this.activePIdx;
+        }
+        canNetworkClientAct() {
+            if (!this.networkEnabled || !this.gameStarted) return true;
+            const expected = this.getNetworkExpectedActorIdx();
+            return expected < 0 || expected === this.networkSeatIdx;
+        }
+        isNetworkCardVisible(playerIdx) {
+            return !this.networkEnabled || playerIdx === this.networkSeatIdx;
+        }
+        isNetworkLocalMethod(method) {
+            if (method !== "getDebt" && /^(get|is|can|has|count|format)/.test(method)) return true;
+            return new Set([
+                "exitGame", "toggleSound", "openRulesReference", "closeRulesReference", "openProjectedScoring", "closeProjectedScoring",
+                "openFinalScoreDetails", "closeFinalScoreDetails", "openPrestigeLogDetails", "closePrestigeLogDetails",
+                "openGameStatsDetails", "closeGameStatsDetails", "openGameAnalysisDetails", "closeGameAnalysisDetails",
+                "openOwnedArea", "closeOwnedArea", "closeOwnedContractOverlay", "openOwnedContract", "openOwnedBandit", "openOwnedThief",
+                "openOwnedTavern", "openRetiredCard", "inspectThiefDie", "inspectBanditDie", "showPriceTooltip", "movePriceTooltip",
+                "hidePriceTooltip", "toggleBankContracts", "closeBankContractsOverlay", "toggleBanditGuilds", "closeBanditGuildsOverlay",
+                "toggleMarketCards", "closeMarketCardsOverlay", "toggleThiefCards", "closeThiefCardsOverlay", "toggleTavernCards",
+                "closeTavernCardsOverlay", "setOwnedAreaTab"
+            ]).has(method);
+        }
+        invokeExternalGameMethod(method, args, directCall) {
+            if (!this.networkEnabled || !this.gameStarted || this.isNetworkLocalMethod(method) || this.networkExecutingRemoteAction) return directCall();
+            if (!this.canNetworkClientAct()) {
+                this.showToast(`Waiting for ${this.getPlayerLabel(this.getNetworkExpectedActorIdx())}.`, "info", 1800);
+                return;
+            }
+            if (this.networkRole === "host") return directCall();
+            return this.sendNetworkAction(method, args);
+        }
+        sendNetworkAction(method, args) {
+            if (this.networkAwaitingAction) return;
+            this.networkAwaitingAction = true;
+            fetch('/api/action', {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ source: this.networkClientId, roomCode: this.networkRoomCode, method, args })
+            }).then(response => response.json().then(data => response.ok ? data : Promise.reject(new Error(data.error || "Action rejected"))))
+                .then(() => this.showToast("Move sent to host.", "info", 900))
+                .catch(error => { this.networkAwaitingAction = false; this.showToast(error.message, "warn", 2600); });
+        }
+        pollNetworkActions() {
+            if (this.networkRole !== "host" || !this.networkRoomCode || !this.networkLobby?.started || this.networkActionBusy) return;
+            this.networkActionBusy = true;
+            fetch(`/api/actions?client=${encodeURIComponent(this.networkClientId)}&room=${encodeURIComponent(this.networkRoomCode)}&since=${this.networkActionVersion}&_=${Date.now()}`, { cache: 'no-store' })
+                .then(response => response.json().then(data => response.ok ? data : Promise.reject(new Error(data.error || "Action connection failed"))))
+                .then(message => {
+                    const actions = message.actions || message.Actions || [];
+                    actions.forEach(action => {
+                        const id = action.Id ?? action.id ?? 0;
+                        const method = action.Method ?? action.method;
+                        const args = action.Args ?? action.args ?? [];
+                        if (id <= this.networkActionVersion || typeof this[method] !== "function") return;
+                        this.networkExecutingRemoteAction = true;
+                        try { this[method](...(Array.isArray(args) ? args : [])); }
+                        finally { this.networkExecutingRemoteAction = false; }
+                        this.networkActionVersion = id;
+                    });
+                    this.networkActionVersion = Math.max(this.networkActionVersion, message.latest ?? message.Latest ?? 0);
+                })
+                .catch(() => { this.networkConnected = false; })
+                .finally(() => { this.networkActionBusy = false; });
+        }
         setIntroPlayerCount(count) {
             this.introPlayerCount = Math.max(2, Math.min(4, parseInt(count, 10) || 4));
             this.renderIntroSetup();
@@ -2957,16 +3504,21 @@
                     </label>
                 </div>
             `).join('');
+            this.renderNetworkStatus();
         }
-        startIntroGame() {
-            const count = this.introPlayerCount || 4;
+        startIntroGame(networkNames = null) {
+            if (this.introGameMode === "network" && !Array.isArray(networkNames)) return;
+            const count = Array.isArray(networkNames) ? networkNames.length : (this.introPlayerCount || 4);
+            this.networkEnabled = this.introGameMode === "network";
             const inputs = Array.from(document.querySelectorAll('#intro-name-grid input[data-player-idx]'));
             const botInputs = Array.from(document.querySelectorAll('#intro-name-grid input[data-bot-idx]'));
-            const names = Array.from({ length: count }, (_, idx) => {
+            const names = Array.isArray(networkNames) ? networkNames : Array.from({ length: count }, (_, idx) => {
                 const raw = inputs.find(input => parseInt(input.dataset.playerIdx, 10) === idx)?.value || "";
                 return raw.trim() || `Player ${idx + 1}`;
             });
-            const botFlags = Array.from({ length: count }, (_, idx) => !!botInputs.find(input => parseInt(input.dataset.botIdx, 10) === idx)?.checked);
+            const botFlags = Array.isArray(networkNames)
+                ? Array.from({ length: count }, () => false)
+                : Array.from({ length: count }, (_, idx) => !!botInputs.find(input => parseInt(input.dataset.botIdx, 10) === idx)?.checked);
             this.players = names.map((name, idx) => createInitialPlayer(idx, name, { isBot: botFlags[idx] }));
             this.players.forEach(p => this.shuffle(p.deck));
             this.turnOrder = Array.from({ length: count }, (_, idx) => idx);
@@ -3043,7 +3595,7 @@
             if (type === "Op") return `${shift} ${SHIFT_BOTTOM_TITLES[shift]}`;
             return key;
         }
-        showPhaseSplash(kind) {
+        showPhaseSplash(kind, synchronize = true) {
             const splash = document.getElementById('phase-splash');
             if (!splash) return;
             let title = "";
@@ -3066,6 +3618,12 @@
                 this.playSound("moon");
             } else {
                 return;
+            }
+            if (synchronize && this.networkEnabled && this.networkRole === "host" && !this.networkApplying) {
+                const id = `${Date.now()}-${++this.networkPhaseSplashCounter}`;
+                this.networkPhaseSplashEvent = { id, kind };
+                this.networkSeenPhaseSplashId = id;
+                this.scheduleNetworkBroadcast();
             }
             splash.innerHTML = `<div class="phase-splash-inner"><div class="phase-splash-icons">${icons}</div><div class="phase-splash-title">${title}</div><div class="phase-splash-subtitle">${subtitle}</div></div>`;
             splash.classList.remove('active');
@@ -4105,6 +4663,9 @@
             }, duration);
         }
         exitGame() {
+            if (/^https?:$/i.test(location.protocol)) {
+                fetch('/api/shutdown', { method: 'POST', keepalive: true }).catch(() => {});
+            }
             try {
                 window.open("", "_self");
                 window.close();
@@ -9192,6 +9753,7 @@
                             p.ownedBandits[selectedBanditIdx].usedThisMoon = true;
                             this.selectedBanditPlacement = null;
                             this.currentWildShift = shift;
+                            this.currentWildPlayerIdx = this.activePIdx;
                             this.currentWildQueue = wildQueue;
                             this.currentWildGain = wildQueue.shift()?.amount || 1;
                             this.currentWildMineLog = { playerIdx: this.activePIdx, parts: mineLogParts, details };
@@ -9209,6 +9771,7 @@
                             p.ownedBandits[selectedBanditIdx].usedThisMoon = true;
                             this.selectedBanditPlacement = null;
                             this.currentWildShift = shift;
+                            this.currentWildPlayerIdx = this.activePIdx;
                             this.currentWildGain = gained;
                             this.currentWildBandit = selectedBandit;
                             document.getElementById('wild-overlay').style.display = 'flex';
@@ -9308,6 +9871,7 @@
                     });
                     if (openedWild) {
                         this.currentWildShift = shift;
+                        this.currentWildPlayerIdx = this.activePIdx;
                         this.currentWildQueue = wildQueue;
                         this.currentWildGain = wildQueue.shift()?.amount || 1;
                         this.currentWildMineLog = { playerIdx: this.activePIdx, parts: mineLogParts, details: [`board +${spotBonus}`, toolState.mineGemBonus ? `tool +${toolState.mineGemBonus}` : ""].filter(Boolean) };
@@ -9331,6 +9895,7 @@
                     this.playSound("gem", { gem: card.gems });
                     if (card.hasWild) {
                         this.currentWildShift = shift;
+                        this.currentWildPlayerIdx = this.activePIdx;
                         this.currentWildGain = 1 + toolState.mineGemBonus;
                         this.currentWildMineLog = { playerIdx: this.activePIdx, parts: [`${gained} ${card.gems}`], details: [`base ${card.hasWild ? 1 : 2}`, spotBonus ? `board +${spotBonus}` : "", toolState.mineGemBonus ? `tool +${toolState.mineGemBonus}` : ""].filter(Boolean) };
                         document.getElementById('wild-overlay').style.display = 'flex';
@@ -9442,18 +10007,20 @@
         }
 
         resolveWild(color) {
+            if (!this.currentWildShift) return;
+            const playerIdx = Number.isInteger(this.currentWildPlayerIdx) ? this.currentWildPlayerIdx : this.activePIdx;
             const gain = this.currentWildGain || 1;
-            this.players[this.activePIdx].gems[color] += gain;
-            this.recordGemGain(this.activePIdx, "mining", gain);
-            if (this.currentWildBandit) this.recordOperationGain(this.activePIdx, "bandit", "gems", gain);
-            if (!this.currentWildBandit && /^M\d+/i.test(this.players[this.activePIdx]?.assigned?.[this.currentWildShift]?.id || "")) {
-                this.recordOperationGain(this.activePIdx, "market", "gems", gain);
+            this.players[playerIdx].gems[color] += gain;
+            this.recordGemGain(playerIdx, "mining", gain);
+            if (this.currentWildBandit) this.recordOperationGain(playerIdx, "bandit", "gems", gain);
+            if (!this.currentWildBandit && /^M\d+/i.test(this.players[playerIdx]?.assigned?.[this.currentWildShift]?.id || "")) {
+                this.recordOperationGain(playerIdx, "market", "gems", gain);
             }
             this.playSound("gem", { gem: color });
             if (this.currentWildMineLog) {
                 this.currentWildMineLog.parts = [...(this.currentWildMineLog.parts || []), `${gain} ${color}`];
             } else {
-                this.addLog(`chose wild mine gem: +${gain} ${color}`, this.activePIdx);
+                this.addLog(`chose wild mine gem: +${gain} ${color}`, playerIdx);
             }
             if (this.currentWildQueue?.length) {
                 this.currentWildGain = this.currentWildQueue.shift()?.amount || 1;
@@ -9463,17 +10030,20 @@
             if (this.currentWildMineLog) {
                 const parts = [...(this.currentWildMineLog.parts || [])];
                 const details = (this.currentWildMineLog.details || []).filter(Boolean);
-                this.addLog(`mined ${parts.join(", ")}${details.length ? ` (${details.join(", ")})` : ""}`, this.currentWildMineLog.playerIdx ?? this.activePIdx);
+                this.addLog(`mined ${parts.join(", ")}${details.length ? ` (${details.join(", ")})` : ""}`, this.currentWildMineLog.playerIdx ?? playerIdx);
                 this.currentWildMineLog = null;
             }
             if (this.currentWildBandit) {
-                this.showBanditTriggeredReport(this.activePIdx, this.currentWildBandit, `+${gain} ${color} gem from mine`);
+                this.showBanditTriggeredReport(playerIdx, this.currentWildBandit, `+${gain} ${color} gem from mine`);
                 this.currentWildBandit = null;
             }
+            const resolvedShift = this.currentWildShift;
             this.currentWildGain = null;
             this.currentWildQueue = null;
+            this.currentWildShift = null;
+            this.currentWildPlayerIdx = null;
             document.getElementById('wild-overlay').style.display = 'none';
-            this.finalizePlacement(this.currentWildShift);
+            this.finalizePlacement(resolvedShift);
         }
 
         finalizePlacement(shift, options = {}) {
@@ -9633,7 +10203,8 @@
             return Number.isInteger(pendingIdx) && this.players[pendingIdx]?.isBot ? pendingIdx : null;
         }
         isBotActive() {
-            return !!(this.gameStarted && !["FINAL"].includes(this.phase) && (this.players[this.activePIdx]?.isBot || this.getPendingBotPlayerIdx() !== null));
+            const botRunnerAllowed = !this.networkEnabled || this.isNetworkLeader();
+            return !!(botRunnerAllowed && this.gameStarted && !["FINAL"].includes(this.phase) && (this.players[this.activePIdx]?.isBot || this.getPendingBotPlayerIdx() !== null));
         }
         queueBotTurn(delay = 450) {
             clearTimeout(this.botTimer);
@@ -10133,6 +10704,9 @@
         render() {
             this.hidePriceTooltip();
             this.normalizePlayerState();
+            const localCanAct = this.canNetworkClientAct();
+            const privateNetworkWait = this.networkEnabled && this.gameStarted && !localCanAct && !["MOON", "FINAL"].includes(this.phase);
+            document.body.classList.toggle('network-private-wait', privateNetworkWait);
             document.body.classList.toggle('intro-active', !this.gameStarted);
             document.body.classList.toggle('phase-planning', this.phase === "PLANNING");
             document.body.classList.toggle('phase-day', this.phase === "DAY");
@@ -10160,8 +10734,9 @@
                 </div>
             `;
             const wildOverlayStats = document.getElementById('wild-gem-stats');
-            if (wildOverlayStats && this.activePIdx != null && this.players[this.activePIdx]) {
-                wildOverlayStats.innerHTML = getPlayerGemStatsHTML(this.players[this.activePIdx]);
+            const wildPlayerIdx = Number.isInteger(this.currentWildPlayerIdx) ? this.currentWildPlayerIdx : this.activePIdx;
+            if (wildOverlayStats && wildPlayerIdx != null && this.players[wildPlayerIdx]) {
+                wildOverlayStats.innerHTML = getPlayerGemStatsHTML(this.players[wildPlayerIdx]);
             }
             const bankOverlay = document.getElementById('bank-contracts-overlay');
             bankOverlay.className = this.bankContractsExpanded ? 'active' : '';
@@ -10817,7 +11392,8 @@
             }
             const map = document.getElementById('main-board');
             const sectorsHTML = SHIFTS.map(s => {
-                const active = (this.phase === 'DAY' && SHIFTS[this.dayShiftIdx] === s);
+                const currentDaySector = (this.phase === 'DAY' && SHIFTS[this.dayShiftIdx] === s);
+                const active = currentDaySector && localCanAct;
                 const activeBanditSelected = active && this.selectedBanditPlacement && this.selectedBanditPlacement.playerIdx === this.activePIdx;
                 const bankContractsHTML = s === "Sunrise" ? `
                     <div class="bank-contract-anchor">
@@ -10864,7 +11440,7 @@
                                 ? ` onclick="event.stopPropagation(); game.toggleThiefCards()"`
                                 : (s === "Sunset" ? ` onclick="event.stopPropagation(); game.toggleTavernCards()"` : ""))));
                 const footerClass = (s === "Sunrise" || s === "Morning" || s === "Noon" || s === "Afternoon" || s === "Sunset") ? "sector-footer clickable" : "sector-footer";
-                return `<div class="sector ${s.toLowerCase()} ${active ? 'active-day' : ''}">
+                return `<div class="sector ${s.toLowerCase()} ${currentDaySector ? 'active-day' : ''}">
                     <div class="sector-header">${renderShiftIcon(s, 'sector-shift-icon')} ${s.toUpperCase()}</div>
                     <div class="grid">${Array.from({length:7}).map((_,i) => {
                         const blocked = this.isBoardSpotBlocked(`${s}-Mine`, i);
@@ -10878,8 +11454,8 @@
                             : 0;
                         const openMineIndices = active && minePreviewCount > 0 ? this.getBoardOpenIndices(`${s}-Mine`, 7, minePreviewCount) : [];
                         const isNext = active && mineActionLegal && openMineIndices.includes(i);
-                        const sabotageActive = !blocked && this.pendingNightChoice?.kind === "night-sabotage-pick" && pId === this.pendingNightChoice.targetIdx && meta?.kind !== "bandit";
-                        const sabotageBonusActive = !blocked && this.isSabotageBonusSelectable(`${s}-Mine`, i);
+                        const sabotageActive = localCanAct && !blocked && this.pendingNightChoice?.kind === "night-sabotage-pick" && pId === this.pendingNightChoice.targetIdx && meta?.kind !== "bandit";
+                        const sabotageBonusActive = localCanAct && !blocked && this.isSabotageBonusSelectable(`${s}-Mine`, i);
                         const clickable = !blocked && (isNext || sabotageActive || sabotageBonusActive);
                         const spotStyle = clickable ? `--spot-hl:${P_COLORS[this.activePIdx]};` : '';
                         const spotClick = sabotageBonusActive ? `game.handleSabotageBonusBoardClick('${s}-Mine', ${i})` : (sabotageActive ? `game.resolveNightSabotage('${s}-Mine', ${i})` : (isNext ? `game.placeWorker('${s}','Mine')` : ''));
@@ -10904,8 +11480,8 @@
                             : (opActionLegal ? 1 : 0);
                         const openOpIndices = active && opPreviewCount > 0 ? this.getBoardOpenIndices(`${s}-Op`, 5, opPreviewCount) : [];
                         const isNext = active && opPreviewCount > 0 && openOpIndices.includes(i);
-                        const sabotageActive = !blocked && this.pendingNightChoice?.kind === "night-sabotage-pick" && pId === this.pendingNightChoice.targetIdx && meta?.kind !== "bandit";
-                        const sabotageBonusActive = !blocked && this.isSabotageBonusSelectable(`${s}-Op`, i);
+                        const sabotageActive = localCanAct && !blocked && this.pendingNightChoice?.kind === "night-sabotage-pick" && pId === this.pendingNightChoice.targetIdx && meta?.kind !== "bandit";
+                        const sabotageBonusActive = localCanAct && !blocked && this.isSabotageBonusSelectable(`${s}-Op`, i);
                         const clickable = !blocked && (isNext || sabotageActive || sabotageBonusActive);
                         const spotStyle = clickable ? `--spot-hl:${P_COLORS[this.activePIdx]};` : '';
                         const spotClick = sabotageBonusActive ? `game.handleSabotageBonusBoardClick('${s}-Op', ${i})` : (sabotageActive ? `game.resolveNightSabotage('${s}-Op', ${i})` : (isNext ? `game.placeWorker('${s}','Op')` : ''));
@@ -10923,8 +11499,10 @@
             const hub = document.getElementById('hub-content'); hub.innerHTML = '';
             this.players.forEach((p, i) => {
                 const isActive = (i === this.activePIdx);
+                const ownsView = this.isNetworkCardVisible(i);
+                const canControl = isActive && ownsView && localCanAct;
                 const currentShift = SHIFTS[this.dayShiftIdx];
-                const banditPrompt = isActive && this.phase === "DAY" && !!currentShift
+                const banditPrompt = canControl && this.phase === "DAY" && !!currentShift
                     && !this.rawCanPlaceMineActionInShift(i, currentShift, false)
                     && !this.rawCanPlaceOpActionInShift(i, currentShift, false)
                     && this.hasReadyBanditActionInShift(i, currentShift);
@@ -10935,7 +11513,7 @@
                     const c = g==='Yellow'?'var(--y)':g==='Green'?'var(--g)':g==='Red'?'var(--r)':g==='Blue'?'var(--b)':'var(--v)';
                     return `<div class="gem-item"><i class="gem-icon-small" style="background:${c}"></i><span>${p.gems[g]}</span></div>`;
                 }).join('') + `<div class="gem-item gem-separator">|</div><div class="gem-item"><i class="gi trap"></i><span>${p.traps || 0}</span></div>`;
-                const ownedContractsHTML = this.getOwnedAreaHTML(i);
+                const ownedContractsHTML = ownsView ? this.getOwnedAreaHTML(i) : '';
                 const retiredCardsHTML = `<div class="retired-cards-box">
                     <div class="retired-cards-title">RETIRES</div>
                     <div class="retired-cards-list">
@@ -10946,56 +11524,59 @@
                 </div>`;
                 const displayedDiceCounts = this.getDisplayedDiceCounts(p);
                 const diceCounterText = `${displayedDiceCounts.permanent}/${displayedDiceCounts.neutral}`;
+                const playerStatsHTML = ownsView ? `
+                    <div class="resource-box">
+                        <div class="res-row"><span>💰 ${p.gold}</span> <span>⭐ ${p.pres}</span> <span>💀 ${p.debt}</span> <span>🎲 ${diceCounterText}</span></div>
+                        <div class="gem-grid">${gemsHTML}</div>
+                        <div class="rep-track">${Array.from({length:15}).map((_, idx) => `<div class="rep-node ${idx<5?'low':idx<10?'mid':'high'}">${p.rep===idx+1?`<div class="rep-marker" style="background:${P_COLORS[i]}"></div>`:(idx===14?'<div class="rep-bust">☠</div>':'')}</div>`).join('')}</div>
+                    </div>
+                    ${retiredCardsHTML}
+                ` : `<div class="resource-box network-public-stats"><div class="res-row"><span>⭐ ${p.pres}</span></div></div>`;
                 row.innerHTML = `
                     <div class="dashboard-main">
                         <div class="meta-section">
                             <div class="p-badge-wrap"><div class="p-badge" style="background:${P_COLORS[i]}; color:${P_TEXT_COLORS[i]};"><span>${this.getPlayerLabel(i)}</span>${p.isBot ? '<span class="bot-badge">BOT</span>' : ''}</div>${i === this.firstPlayerIdx ? `<span class="first-player-token">★</span>` : ''}</div>
-                            <div class="resource-box">
-                                <div class="res-row"><span>💰 ${p.gold}</span> <span>⭐ ${p.pres}</span> <span>💀 ${p.debt}</span> <span>🎲 ${diceCounterText}</span></div>
-                                <div class="gem-grid">${gemsHTML}</div>
-                                <div class="rep-track">${Array.from({length:15}).map((_, idx) => `<div class="rep-node ${idx<5?'low':idx<10?'mid':'high'}">${p.rep===idx+1?`<div class="rep-marker" style="background:${P_COLORS[i]}"></div>`:(idx===14?'<div class="rep-bust">☠</div>':'')}</div>`).join('')}</div>
-                            </div>
-                            ${retiredCardsHTML}
+                            ${playerStatsHTML}
                         </div>
                         <div class="pools-container"><div class="day-pools-row">${SHIFTS.map(s => {
                             const card = p.assigned[s];
                             const status = (p.finishedShifts.includes(s) || (p.nightPendingShifts || []).includes(s)) ? "finished" : "assigned";
-                            const isDestHighlight = (isActive && this.interactionMode === 'dest');
-                            const shiftActionHighlight = isActive && this.phase === 'DAY' && SHIFTS[this.dayShiftIdx] === s && (this.canPlaceMineActionInShift(i, s, !!(this.selectedBanditPlacement && this.selectedBanditPlacement.playerIdx === i)) || this.canPlaceOpActionInShift(i, s, !!(this.selectedBanditPlacement && this.selectedBanditPlacement.playerIdx === i)));
+                            const isDestHighlight = (canControl && this.interactionMode === 'dest');
+                            const shiftActionHighlight = canControl && this.phase === 'DAY' && SHIFTS[this.dayShiftIdx] === s && (this.canPlaceMineActionInShift(i, s, !!(this.selectedBanditPlacement && this.selectedBanditPlacement.playerIdx === i)) || this.canPlaceOpActionInShift(i, s, !!(this.selectedBanditPlacement && this.selectedBanditPlacement.playerIdx === i)));
                             return `<div class="pool-box ${s.toLowerCase()} ${isDestHighlight?'dest-highlight':''} ${shiftActionHighlight?'shift-highlight':''}" onclick="game.handlePoolSelect('${s}')">
                                 <div style="font-size:0.7em;">${renderShiftIcon(s, 'pool-shift-icon')}</div>
                                 <div style="display:flex; flex-wrap:wrap; gap:2px; min-height:24px; justify-content:center;">
                                     ${p.dice.map((d, dIdx) => {
-                                        const canSendToNight = isActive && this.phase === 'DAY' && this.interactionMode === null && d !== 'Night';
+                                        const canSendToNight = canControl && this.phase === 'DAY' && this.interactionMode === null && d !== 'Night';
                                         const isNeutral = p.diceOrigins[dIdx] === 'neutral';
                                         const dieBg = isNeutral ? '#90959f' : P_COLORS[i];
                                         const dieColor = isNeutral ? '#14161a' : P_TEXT_COLORS[i];
                                         const dieBorder = isNeutral ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.7)';
-                                        return d === s ? `<div class="die ${this.selectedDieIndex===dIdx?'selected':(isActive && this.interactionMode==='src'?'src-highlight':'')} ${canSendToNight ? 'night-hover' : ''}" style="background:${dieBg}; color:${dieColor}; border-color:${dieBorder};" onclick="event.stopPropagation(); game.handleDieSelect(${dIdx})">${renderShiftIcon(s, 'die-shift-icon')}</div>` : '';
-                                    }).join('')}${this.getBanditPoolDiceHTML(i, s, isActive)}
+                                        return d === s ? `<div class="die ${this.selectedDieIndex===dIdx?'selected':(canControl && this.interactionMode==='src'?'src-highlight':'')} ${canSendToNight ? 'night-hover' : ''}" style="background:${dieBg}; color:${dieColor}; border-color:${dieBorder};" onclick="event.stopPropagation(); game.handleDieSelect(${dIdx})">${renderShiftIcon(s, 'die-shift-icon')}</div>` : '';
+                                    }).join('')}${this.getBanditPoolDiceHTML(i, s, canControl)}
                                 </div>
                                 ${card ? (card.type === "market"
-                                    ? getMarketCardHTML(card, 1, status, { interactiveNight: isActive && this.phase === "NIGHT", playerIdx: i, shift: s })
-                                    : getCardHTML(card, 1, status, { interactiveNight: isActive && this.phase === "NIGHT", playerIdx: i, shift: s }))
+                                    ? getMarketCardHTML(card, 1, status, { interactiveNight: canControl && this.phase === "NIGHT", playerIdx: i, shift: s })
+                                    : getCardHTML(card, 1, status, { interactiveNight: canControl && this.phase === "NIGHT", playerIdx: i, shift: s }))
                                     : `<div style="${s === 'Night' ? 'height:28px;' : 'height:135px;'} display:flex; align-items:center; justify-content:center; color:#8a8a8a; font-size:1.8em;">${SHIFT_EMPTY_ICONS[s]}</div>`}
                             </div>`;
                         }).join('')}</div><div class="night-pool-row">${["Night"].map(s => {
                             const card = p.assigned[s];
                             const status = (p.finishedShifts.includes(s) || (p.nightPendingShifts || []).includes(s)) ? "finished" : "assigned";
-                            const isDestHighlight = (isActive && this.interactionMode === 'dest');
+                            const isDestHighlight = (canControl && this.interactionMode === 'dest');
                             const nightDiceHTML = p.dice.map((d, dIdx) => {
-                                const canSendToNight = isActive && this.phase === 'DAY' && this.interactionMode === null && d !== 'Night';
+                                const canSendToNight = canControl && this.phase === 'DAY' && this.interactionMode === null && d !== 'Night';
                                 const isNeutral = p.diceOrigins[dIdx] === 'neutral';
                                 const dieBg = isNeutral ? '#90959f' : P_COLORS[i];
                                 const dieColor = isNeutral ? '#14161a' : P_TEXT_COLORS[i];
                                 const dieBorder = isNeutral ? 'rgba(255,255,255,0.35)' : 'rgba(255,255,255,0.7)';
-                                return d === s ? `<div class="die ${this.selectedDieIndex===dIdx?'selected':(isActive && this.interactionMode==='src'?'src-highlight':'')} ${canSendToNight ? 'night-hover' : ''}" style="background:${dieBg}; color:${dieColor}; border-color:${dieBorder};" onclick="event.stopPropagation(); game.handleDieSelect(${dIdx})">${renderShiftIcon(s, 'die-shift-icon')}</div>` : '';
+                                return d === s ? `<div class="die ${this.selectedDieIndex===dIdx?'selected':(canControl && this.interactionMode==='src'?'src-highlight':'')} ${canSendToNight ? 'night-hover' : ''}" style="background:${dieBg}; color:${dieColor}; border-color:${dieBorder};" onclick="event.stopPropagation(); game.handleDieSelect(${dIdx})">${renderShiftIcon(s, 'die-shift-icon')}</div>` : '';
                             }).join('');
                             const thiefDiceHTML = (p.ownedThieves || [])
                                 .map((thief, thiefIdx) => ({ thief, thiefIdx }))
                                 .filter(({ thief }) => thief.assignedShift === "Night")
                                 .map(({ thief, thiefIdx }) => {
-                                    const selectable = isActive && this.phase === "NIGHT" && thief.enabled !== false;
+                                    const selectable = canControl && this.phase === "NIGHT" && thief.enabled !== false;
                                     const selected = this.selectedThiefDie?.playerIdx === i && this.selectedThiefDie?.thiefIdx === thiefIdx;
                                     const dieHTML = getThiefMarkerHTML(
                                         thief,
@@ -11008,8 +11589,8 @@
                                 .join('');
                             return `<div class="pool-box ${s.toLowerCase()} ${isDestHighlight?'dest-highlight':''}" onclick="game.handlePoolSelect('${s}')">
                                 ${card ? (card.type === "market"
-                                    ? getMarketCardHTML(card, 1, status, { interactiveNight: isActive && this.phase === "NIGHT", playerIdx: i, shift: s })
-                                    : getCardHTML(card, 1, status, { interactiveNight: isActive && this.phase === "NIGHT", playerIdx: i, shift: s }))
+                                    ? getMarketCardHTML(card, 1, status, { interactiveNight: canControl && this.phase === "NIGHT", playerIdx: i, shift: s })
+                                    : getCardHTML(card, 1, status, { interactiveNight: canControl && this.phase === "NIGHT", playerIdx: i, shift: s }))
                                     : `<div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; color:#8a8a8a; font-size:1.8em; pointer-events:none;">${SHIFT_EMPTY_ICONS[s]}</div>`}
                                 <div style="position:absolute; inset:0; display:flex; flex-wrap:wrap; gap:2px; justify-content:center; align-items:center; align-content:center; padding:4px;">
                                     ${nightDiceHTML}${thiefDiceHTML}
@@ -11017,7 +11598,7 @@
                             </div>`;
                         }).join('')}</div></div>
                         <div class="controls-wrapper">
-                        ${isActive ? `
+                        ${canControl ? `
                             <div class="row-main">
                                 <button class="btn btn-main draw" onclick="game.drawAndRoll(${i})" ${p.hasRolled || this.phase!=='PLANNING' ? 'disabled' : ''}>DRAW & ROLL</button>
                                 <button class="btn btn-main end" onclick="game.undo()" ${!this.canUndo() ? 'disabled' : ''}>↶ Undo</button>
@@ -11033,7 +11614,7 @@
                             ${ownedContractsHTML}
                         </div>
                     </div>
-                    ${isActive && p.hand.length > 0 && (this.phase === 'PLANNING' || this.phase === 'DAY') ? `<div class="hand-container">
+                    ${canControl && p.hand.length > 0 && (this.phase === 'PLANNING' || this.phase === 'DAY') ? `<div class="hand-container">
                         ${p.hand.map(c => {
                             const canAssign = (p.dice.includes(c.shift) || (p.ownedBandits || []).some(bandit => !bandit.placedToday && !bandit.usedThisMoon && bandit.assignedShift === c.shift)) && !p.assigned[c.shift];
                             return `<div style="display:flex; flex-direction:column; gap:5px">
@@ -11045,10 +11626,20 @@
                 `; hub.appendChild(row);
             });
             this.queueBotTurn();
+            this.renderNetworkStatus();
+            this.scheduleNetworkBroadcast();
         }
     }
-    const game = new GameEngine();
+    const gameEngine = new GameEngine();
+    const game = new Proxy(gameEngine, {
+        get(target, property) {
+            const value = target[property];
+            if (typeof value !== "function") return value;
+            return (...args) => target.invokeExternalGameMethod(`${property}`, args, () => value.apply(target, args));
+        }
+    });
     game.renderIntroSetup();
+    game.initNetworkTransport();
 </script>
 </body>
 </html>
