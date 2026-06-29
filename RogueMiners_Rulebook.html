@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rogue Miners - Rulebook</title>
+<style>
+    @page { size: A4; margin: 0; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #1a1b20; color: #20242a; font-family: "Segoe UI", Arial, sans-serif; }
+    body { counter-reset: page; }
+    .page {
+        width: 210mm; height: 297mm; min-height: 297mm; padding: 14mm 15mm 13mm; margin: 0 auto;
+        background: #f5f1e8; position: relative; overflow: hidden; page-break-after: always;
+        counter-increment: page; print-color-adjust: exact; -webkit-print-color-adjust: exact;
+    }
+    .page::before { content: ""; position: absolute; inset: 0; pointer-events: none; border: 4mm solid #171920; }
+    .page::after { content: ""; position: absolute; inset: 5mm; border: 0.35mm solid rgba(171,130,49,.48); pointer-events: none; }
+    .cover { padding: 0; background: #050713; color: #fff; }
+    .cover::before, .cover::after { display: none; }
+    .cover-art { position: absolute; inset: 0 0 56mm; width: 100%; height: calc(100% - 56mm); object-fit: cover; object-position: 50% 38%; }
+    .cover-shade { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 45%, rgba(5,7,19,.35) 67%, #050713 83%); }
+    .cover-copy { position: absolute; left: 17mm; right: 17mm; bottom: 15mm; text-align: center; }
+    .cover-copy h1 { margin: 0; font-size: 24mm; line-height: .85; font-weight: 950; color: #fff; text-shadow: 0 2mm 5mm #000; }
+    .cover-sub { margin-top: 5mm; color: #f0cf72; font-size: 5mm; font-weight: 800; text-transform: uppercase; }
+    .cover-meta { margin-top: 6mm; display: flex; justify-content: center; gap: 8mm; color: #d7dbe7; font-size: 3.4mm; }
+    .cover-edition { margin-top: 5mm; color: #929bad; font-size: 2.7mm; }
+    h1, h2, h3, h4, p { margin-top: 0; }
+    h1 { font-size: 12mm; line-height: .95; color: #141720; margin-bottom: 4mm; }
+    h2 { font-size: 7mm; color: #202630; margin-bottom: 3mm; }
+    h3 { font-size: 4.2mm; color: #6c3e21; margin-bottom: 1.8mm; }
+    h4 { font-size: 3.4mm; color: #252a32; margin-bottom: 1mm; }
+    p, li, td, th { font-size: 3.05mm; line-height: 1.38; }
+    p { margin-bottom: 2.7mm; }
+    ul, ol { margin: 1.5mm 0 3mm 5mm; padding-left: 4mm; }
+    li { margin-bottom: 1.1mm; }
+    strong { font-weight: 800; }
+    .eyebrow { color: #9d7422; font-size: 2.8mm; font-weight: 900; text-transform: uppercase; margin-bottom: 2mm; }
+    .lead { font-size: 4mm; line-height: 1.48; color: #3b424c; max-width: 170mm; }
+    .rule { height: .55mm; background: linear-gradient(to right, #c59a3b, #803f29, #263c69, transparent); margin: 3mm 0 5mm; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3mm; }
+    .card { border: .35mm solid #b9ad93; border-radius: 2mm; background: rgba(255,255,255,.62); padding: 3.2mm; break-inside: avoid; }
+    .card.dark { background: #20242d; color: #edf0f4; border-color: #9d7b35; }
+    .card.dark h3 { color: #f0cf72; }
+    .card.accent { border-left: 2mm solid #b78628; }
+    .callout { margin: 3mm 0; padding: 3mm 4mm; background: #e9dfc8; border-left: 2mm solid #8b4c2d; font-size: 3.2mm; line-height: 1.42; }
+    .warning { background: #f2d7d1; border-left-color: #b33f35; }
+    .example { background: #dce7ec; border-left-color: #2e6078; }
+    .sequence { display: grid; grid-template-columns: repeat(5, 1fr); gap: 2mm; margin: 4mm 0; }
+    .sequence > div { padding: 3mm 2mm; min-height: 24mm; color: #fff; border-radius: 1.5mm; text-align: center; }
+    .sequence b { display: block; font-size: 4mm; margin-bottom: 1.3mm; }
+    .sequence span { font-size: 2.5mm; line-height: 1.25; display: block; }
+    .sunrise { background: #b88917; } .morning { background: #277446; } .noon { background: #a64035; }
+    .afternoon { background: #315b9b; } .sunset { background: #74428d; }
+    table { width: 100%; border-collapse: collapse; margin: 2mm 0 4mm; break-inside: avoid; }
+    th { background: #262b35; color: #fff; text-align: left; font-weight: 800; }
+    th, td { border: .25mm solid #aaa18e; padding: 1.7mm 2mm; vertical-align: top; }
+    tbody tr:nth-child(even) { background: rgba(226,218,199,.55); }
+    .compact th, .compact td { padding: 1.15mm 1.5mm; font-size: 2.65mm; line-height: 1.28; }
+    .tiny th, .tiny td { padding: .85mm 1.2mm; font-size: 2.35mm; line-height: 1.22; }
+    .icon-row { display: flex; align-items: center; gap: 3mm; margin-bottom: 3mm; }
+    .op-icon { width: 12mm; height: 12mm; object-fit: contain; background: #fff; border: .35mm solid #baaa87; border-radius: 2mm; padding: 1.5mm; }
+    .gem { display: inline-block; width: 3.2mm; height: 3.2mm; transform: rotate(45deg); border: .25mm solid rgba(0,0,0,.35); margin: 0 1.2mm; vertical-align: .2mm; }
+    .yellow { background: #f3c52a; } .green { background: #36a65b; } .red { background: #d94c44; }
+    .blue { background: #4a83d4; } .violet { background: #9b61ba; } .rainbow { background: conic-gradient(#f3c52a,#36a65b,#d94c44,#4a83d4,#9b61ba,#f3c52a); }
+    .term { display: grid; grid-template-columns: 31mm 1fr; gap: 3mm; padding: 2mm 0; border-bottom: .25mm solid #cfc6b2; }
+    .term b { color: #6c3e21; }
+    .folio { position: absolute; bottom: 6.2mm; left: 15mm; right: 15mm; display: flex; justify-content: space-between; color: #666b74; font-size: 2.4mm; z-index: 3; }
+    .folio .num::after { content: counter(page); }
+    .toc { columns: 2; column-gap: 12mm; margin-top: 5mm; }
+    .toc div { break-inside: avoid; padding: 2mm 0; border-bottom: .25mm solid #c9bfa9; font-size: 3.3mm; }
+    .toc b { display: inline-block; width: 10mm; color: #9d7422; }
+    .sector-band { display: grid; grid-template-columns: 28mm 1fr 45mm; gap: 3mm; align-items: center; padding: 2.2mm 3mm; color: #fff; margin-bottom: 1.5mm; border-radius: 1.5mm; }
+    .sector-band img { width: 8mm; height: 8mm; object-fit: contain; vertical-align: middle; margin-right: 2mm; }
+    .sector-band strong { font-size: 3.3mm; }
+    .sector-band span { font-size: 2.7mm; }
+    .checklist { list-style: none; padding-left: 0; margin-left: 0; }
+    .checklist li::before { content: "□"; color: #9d7422; font-weight: 900; margin-right: 2mm; }
+    .appendix-card { border: .3mm solid #b9ad93; border-radius: 1.5mm; padding: 2.3mm; background: rgba(255,255,255,.62); break-inside: avoid; }
+    .appendix-card h3 { font-size: 3.35mm; margin-bottom: 1mm; }
+    .appendix-card p { font-size: 2.55mm; line-height: 1.28; margin-bottom: 1mm; }
+    .appendix-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
+    .tavern-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5mm; }
+    .tavern-grid .appendix-card { min-height: 48mm; }
+    .thief-grid .appendix-card { min-height: 32mm; }
+    .tag { display: inline-block; padding: .6mm 1.4mm; border-radius: 4mm; color: #fff; background: #303641; font-size: 2.1mm; font-weight: 800; text-transform: uppercase; }
+    .tag.success { background: #347749; } .tag.failure { background: #a7473f; } .tag.threshold { background: #3c638e; }
+    .note-small { color: #6b7078; font-size: 2.45mm; line-height: 1.3; }
+    .page-title-art { position: absolute; right: 14mm; top: 13mm; width: 25mm; height: 25mm; object-fit: contain; opacity: .16; }
+    @media print { html, body { background: transparent; } .page { margin: 0; } }
+</style>
+</head>
+<body>
+
+<section class="page cover">
+    <img class="cover-art" src="RogueMiners.jfif" alt="Rogue Miners cover">
+    <div class="cover-shade"></div>
+    <div class="cover-copy">
+        <h1>RULEBOOK</h1>
+        <div class="cover-sub">Official Rules Truth Edition</div>
+        <div class="cover-meta"><span>2–4 players</span><span>Strategic worker placement</span><span>Four moons</span></div>
+        <div class="cover-edition">Prototype rules synchronized with the digital implementation · June 2026</div>
+    </div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">Welcome below</div><h1>THE MINES REMEMBER</h1><div class="rule"></div>
+    <p class="lead">Beneath five shifting suns, rival crews mine gemstones, trade with dangerous guilds, and build reputations that may not survive the night. Prestige wins the expedition, but every shortcut leaves evidence.</p>
+    <div class="grid-2">
+        <div class="card dark"><h3>Objective</h3><p>Finish the fourth Moon with the most Prestige. Build points during play, then add retired cards, Bandit guild sets, Thief legacies, Tavern missions, gold, and complete gem sets. Finally subtract Reputation penalties.</p></div>
+        <div class="card accent"><h3>Game profile</h3><p><strong>Players:</strong> 2–4<br><strong>Structure:</strong> 16 days, grouped into 4 Moons<br><strong>Core systems:</strong> card-driven worker placement, engine building, set collection, theft, sabotage, debt, and hidden information.</p></div>
+    </div>
+    <h2 style="margin-top:6mm">The table contract</h2>
+    <div class="grid-2">
+        <div>
+            <h3>Golden rules</h3>
+            <ol>
+                <li><strong>Card text modifies this rulebook.</strong> If a card gives a specific exception, follow the card.</li>
+                <li><strong>Resolve actions from left to right.</strong> You cannot jump past an unused earlier action.</li>
+                <li><strong>Linked actions resolve together.</strong> Spend one legal die for every linked space.</li>
+                <li><strong>“Any gem” is chosen by the player who pays or gains it.</strong></li>
+                <li><strong>Traps are not gems.</strong> They never satisfy gem costs, sets, or missions.</li>
+            </ol>
+        </div>
+        <div>
+            <h3>Timing rule</h3>
+            <p>Complete the current action and all of its mandatory effects before resolving an additional action, triggered effect, or ending the turn. When several effects wait at the same timing window, resolve the active player’s effects in card order, then continue in player order.</p>
+            <div class="callout"><strong>Rules Truth:</strong> Planning builds card pools. Day spends dice from those pools. Night uses one card per turn. Moon penalizes unpaid debt before presence. Final scoring audits every source.</div>
+        </div>
+    </div>
+    <h2>Contents</h2>
+    <div class="toc">
+        <div><b>01</b> Components & setup</div><div><b>02</b> Board and card anatomy</div><div><b>03</b> Game structure</div><div><b>04</b> Planning phase</div><div><b>05</b> Day phase</div><div><b>06</b> Operations</div><div><b>07</b> Debt & reputation</div><div><b>08</b> Bandits</div><div><b>09</b> Thieves</div><div><b>10</b> Night phase</div><div><b>11</b> Moon scoring</div><div><b>12</b> Final scoring</div><div><b>13</b> Digital play</div><div><b>A–D</b> Complete references</div>
+    </div>
+    <div class="folio"><span>ROGUE MINERS · RULES TRUTH</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">01 · Before play</div><h1>COMPONENTS</h1><div class="rule"></div>
+    <div class="grid-2">
+        <div>
+            <h3>Board and cards</h3>
+            <ul class="checklist">
+                <li>1 Main Board with 5 Mine and 5 Operation sections</li>
+                <li>40 Starting cards: 10 per player</li>
+                <li>50 Market cards</li>
+                <li>36 Bandit cards: five 7-card guilds plus the Crownless King</li>
+                <li>36 Thief cards: six 6-card dens</li>
+                <li>36 Tavern mission cards</li>
+                <li>109 Bank tiles: 78 contracts and 31 tools</li>
+            </ul>
+            <h3>Bank tile breakdown</h3>
+            <table class="compact"><thead><tr><th>Tier</th><th>Contracts</th><th>Tools</th><th>Total</th></tr></thead><tbody><tr><td>Bronze</td><td>21</td><td>15</td><td>36</td></tr><tr><td>Silver</td><td>26</td><td>11</td><td>37</td></tr><tr><td>Gold</td><td>31</td><td>5</td><td>36</td></tr></tbody></table>
+        </div>
+        <div>
+            <h3>Dice, markers, and resources</h3>
+            <ul class="checklist">
+                <li>10 Miner dice in each player color: 5 starting and 5 in the Tavern bag</li>
+                <li>10 Neutral Miner dice</li>
+                <li>Player Miner markers for board placement</li>
+                <li>35 colored Bandit markers and 1 gray Crownless King marker</li>
+                <li>36 numbered Thief markers</li>
+                <li>1 First Player marker</li>
+                <li>Gold, Debt, Trap, and five colors of Gem tokens</li>
+                <li>Prestige and Reputation tracking pieces</li>
+            </ul>
+            <div class="callout"><strong>Prototype note:</strong> The digital game manages unlimited resource counters. For a physical prototype, use at least 25 gems of each color, 40 gold, 30 debt, 20 traps, and 15 Miner markers per player; increase the shared supply if a stress test runs out.</div>
+        </div>
+    </div>
+    <h2>Icon language</h2>
+    <table class="compact"><tbody>
+        <tr><td><strong>⭐ Prestige</strong></td><td>Victory points, paid or gained immediately unless marked “End Game.”</td><td><strong>💰 Gold</strong></td><td>Currency for Market cards, Tools, dice, traps, and effects.</td></tr>
+        <tr><td><strong>🔍 Suspicion</strong></td><td>Your position on the 15-space Reputation track.</td><td><strong>💀 Debt</strong></td><td>Borrowed gold that repeatedly costs Prestige at Moon scoring.</td></tr>
+        <tr><td><strong>🔒 Keep</strong></td><td>A protected gem that cannot be stolen this Night.</td><td><strong>🪤 Trap</strong></td><td>A black trap token mixed into a player’s bag; never a gem.</td></tr>
+        <tr><td><strong>🛡 Guard</strong></td><td>A Night defense that blocks a robbery.</td><td><strong>⛓ Linked</strong></td><td>All connected spaces must be paid and resolved together.</td></tr>
+    </tbody></table>
+    <div class="folio"><span>COMPONENTS</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">01 · Before play</div><h1>SETUP</h1><div class="rule"></div>
+    <ol>
+        <li><strong>Place the Main Board.</strong> Arrange the five sectors from Sunrise through Sunset.</li>
+        <li><strong>Choose player colors and names.</strong> Give each player 5 Miner dice, their Miner markers, and their 10-card Starting deck.</li>
+        <li><strong>Take starting resources:</strong> 10⭐, 5💰, 1 gem of each color, 0 Debt, 0 Traps, and Reputation position 1.</li>
+        <li><strong>Prepare Bank tiles.</strong> Shuffle Bronze, Silver, and Gold pools separately. Reveal 3 tiles from each tier.</li>
+        <li><strong>Prepare the card displays.</strong> Shuffle and reveal 5 Market cards and 3 Thief cards. Place all five 7-card Bandit guild stacks and the Crownless King where everyone can see them. Shuffle the Tavern deck.</li>
+        <li><strong>Prepare the Tavern bag.</strong> Add 5 additional Miner dice of every participating player color and 10 Neutral Miner dice. Reveal 5 dice as the Tavern offer.</li>
+        <li><strong>Choose the First Player.</strong> Player 1 begins the first Planning phase. Place all Prestige and Reputation markers.</li>
+    </ol>
+    <h2>Board capacity by player count</h2>
+    <table><thead><tr><th>Players</th><th>Available spaces in every Mine row</th><th>Available spaces in every Operation row</th></tr></thead><tbody>
+        <tr><td><strong>4</strong></td><td>All 7 spaces</td><td>All 5 spaces</td></tr>
+        <tr><td><strong>3</strong></td><td>Cross out the last space</td><td>Cross out the last space</td></tr>
+        <tr><td><strong>2</strong></td><td>Cross out the last 2 spaces</td><td>Cross out the last 2 spaces</td></tr>
+    </tbody></table>
+    <div class="grid-2">
+        <div class="card"><h3>Starting deck</h3><p>Each player has one Base card for each Day shift (RP01–RP05) and five advanced Starting cards (RP06–RP10). Shuffle all 10 together.</p><p><strong>Base cards</strong> carry a ⚙ mark. They are permanent: they cannot be sold, retired, stolen, or lost. Whenever they leave play, return them to the bottom of their owner’s deck.</p></div>
+        <div class="card"><h3>Public and private information</h3><p>Prestige, played cards, board markers, and public displays are open information. A player’s hand, unplayed deck, gems, gold, traps, Debt, Reputation, and owned-card area are private in Shared Network play. Shared Screen play uses table trust and pass-the-screen etiquette.</p></div>
+    </div>
+    <div class="callout example"><strong>First game:</strong> Ignore advanced tactical planning. Learn the rhythm: assign cards, spend matching dice, use one Night card per turn, then pay Debt before Moon scoring.</div>
+    <div class="folio"><span>SETUP</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <img class="page-title-art" src="_operation_icons/mine.png" alt="">
+    <div class="eyebrow">02 · Reading the table</div><h1>BOARD ANATOMY</h1><div class="rule"></div>
+    <p class="lead">Every Day shift pairs one Mine with one Operation. The color of that sector determines its common gem and its family of matching cards and Bandits.</p>
+    <div class="sector-band sunrise"><strong>Sunrise</strong><span><img src="_operation_icons/mine.png">Yellow Mine</span><span><img src="_operation_icons/bank_icon.png">Bank</span></div>
+    <div class="sector-band morning"><strong>Morning</strong><span><img src="_operation_icons/mine.png">Green Mine</span><span><img src="_operation_icons/bandit_icon.png">Bandit Guilds</span></div>
+    <div class="sector-band noon"><strong>Noon</strong><span><img src="_operation_icons/mine.png">Red Mine</span><span><img src="_operation_icons/market_icon.png">Market</span></div>
+    <div class="sector-band afternoon"><strong>Afternoon</strong><span><img src="_operation_icons/mine.png">Blue Mine</span><span><img src="_operation_icons/thief_icon.png">Thieves Den</span></div>
+    <div class="sector-band sunset"><strong>Sunset</strong><span><img src="_operation_icons/mine.png">Violet Mine</span><span><img src="_operation_icons/tavern_icon.png">Tavern</span></div>
+    <div class="grid-2" style="margin-top:5mm">
+        <div>
+            <h3>Mine row</h3>
+            <p>Mine spaces hold Miner or Bandit markers. The earliest open spaces may show board bonuses. Existing presence, Tools, Bandits, and the printed card action can increase production.</p>
+            <h3>Operation row</h3>
+            <p>Operation spaces record presence and allow the operation only when the action space on the played card actually names that operation. A reward-only action placed in an Operation row grants only its printed reward.</p>
+        </div>
+        <div>
+            <h3>Presence</h3>
+            <p>Every Mine and Operation is a separate presence contest at Moon scoring. Common Miners, Bandit markers, and “presence-only” markers count. Presence-only markers never trigger placement or operation effects.</p>
+            <h3>Capacity</h3>
+            <p>An action is legal only if the board has enough empty spaces for every required marker. A linked 3-space action needs 3 empty spaces and 3 legal dice before it highlights.</p>
+        </div>
+    </div>
+    <div class="callout warning"><strong>Sabotaged section:</strong> A section means both rows of one Day transition. For example, the Noon section includes the Noon Mine and the Noon Market row.</div>
+    <h2>Turn order</h2>
+    <p>Resolve players in the current player order. After each Moon, reorder from least Prestige to most Prestige. Ties reverse their previous relative order. The first player in the new order receives the First Player marker.</p>
+    <div class="folio"><span>BOARD ANATOMY</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">02 · Reading the table</div><h1>CARD ANATOMY</h1><div class="rule"></div>
+    <div class="grid-2">
+        <div class="card">
+            <h3>Day side</h3>
+            <ol>
+                <li><strong>ID and shift color</strong> identify the card and its natural pool.</li>
+                <li><strong>Mining row</strong> shows one or more action spaces and their gem output.</li>
+                <li><strong>Operation row</strong> shows Operations and/or direct Gold or Prestige benefits.</li>
+                <li><strong>Chains</strong> connect actions that must be paid and resolved together.</li>
+                <li><strong>Reputation row</strong> changes costs or rewards according to Safe, Watched, or Suspicious status.</li>
+                <li><strong>⊕ Additional action</strong> is optional after the main Operation resolves.</li>
+            </ol>
+        </div>
+        <div class="card dark">
+            <h3>Night side</h3>
+            <ol>
+                <li><strong>Steal</strong> states how many gems are attempted.</li>
+                <li><strong>Sabotage</strong> removes a common Miner from the board.</li>
+                <li><strong>Guard</strong> protects its owner until triggered or Night ends.</li>
+                <li><strong>Suspicion</strong> shows evidence gained on use, traps, or guards.</li>
+                <li><strong>Retire value</strong> scores only if the card is retired. ⚙ Base cards return instead.</li>
+            </ol>
+        </div>
+    </div>
+    <h2 style="margin-top:5mm">Action grammar</h2>
+    <table><thead><tr><th>Symbol or phrase</th><th>Meaning</th></tr></thead><tbody>
+        <tr><td><strong>[Action] [Action]</strong></td><td>Unlinked spaces. Resolve independently, from left to right, paying one die each.</td></tr>
+        <tr><td><strong>[Action] ⛓ [Action]</strong></td><td>Linked group. Pay all dice, place all markers, then resolve the entire group in printed order.</td></tr>
+        <tr><td><strong>Any gem</strong> <i class="gem rainbow"></i></td><td>The chooser selects a real gem color. A Trap can never be selected as a gem.</td></tr>
+        <tr><td><strong>Active</strong></td><td>A Bandit effect used when its marker was placed that day, or a Thief effect tied to using its die.</td></tr>
+        <tr><td><strong>Passive</strong></td><td>A Bandit effect used when unplaced, or a Thief effect while its die remains ready and unused.</td></tr>
+        <tr><td><strong>Start / End of Day or Night</strong></td><td>Resolve in the named timing window. Confirm all reports before continuing.</td></tr>
+    </tbody></table>
+    <div class="callout example"><strong>Example:</strong> A card shows Market ⛓ +3⭐. The player needs two dice and two empty Operation spaces. They buy one Market card, gain 3⭐, place two markers, and spend two dice. The reward space does not cause a second Market purchase.</div>
+    <div class="folio"><span>CARD ANATOMY</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">03 · The expedition</div><h1>GAME STRUCTURE</h1><div class="rule"></div>
+    <p class="lead">Rogue Miners lasts four Moons. Each Moon contains four days. Each day follows the same rhythm.</p>
+    <div class="sequence">
+        <div class="sunrise"><b>1</b><span>Planning<br>Draw, roll, assign</span></div>
+        <div class="morning"><b>2</b><span>Day<br>Five shifts</span></div>
+        <div class="afternoon"><b>3</b><span>Night<br>Guard, steal, sabotage</span></div>
+        <div class="sunset"><b>4</b><span>Preparation<br>Return, retire, refill</span></div>
+        <div style="background:#242936"><b>☾</b><span>After Day 4<br>Moon scoring</span></div>
+    </div>
+    <h2>One day at a glance</h2>
+    <div class="grid-2">
+        <div>
+            <h3>Planning</h3><p>Each player draws up to a five-card planning capacity, rolls all available Miner dice, auto-assigns ready Bandit dice, and assigns cards to matching shift pools.</p>
+            <h3>Day</h3><p>Resolve Sunrise, Morning, Noon, Afternoon, and Sunset. Players spend dice only from the current shift’s card pool.</p>
+        </div>
+        <div>
+            <h3>Night</h3><p>Unspent common dice and ready Thief dice power Night actions. A player may activate only one card per Night turn.</p>
+            <h3>Preparation</h3><p>Resolve guards, return unused special dice, refill displays, advance the day, and begin Planning again.</p>
+        </div>
+    </div>
+    <h2 style="margin-top:5mm">End of a Moon</h2>
+    <ol>
+        <li>Players may repay Debt.</li><li>Every unpaid Debt costs 1⭐.</li><li>Score presence in all 10 board sections.</li><li>Refresh displays, special dice, and board state.</li><li>Set the new player order.</li>
+    </ol>
+    <div class="callout"><strong>End of game:</strong> After presence scoring for the fourth Moon, preserve the final board state for Tavern missions, then proceed directly to Final Scoring.</div>
+    <h2>Ending a turn</h2>
+    <p>Players explicitly press END or PASS. The game does not automatically pass merely because one action was taken. This matters for cards with several independent spaces. Undo is available until the player ends their turn.</p>
+    <div class="folio"><span>GAME STRUCTURE</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">04 · Phase rules</div><h1>PLANNING</h1><div class="rule"></div>
+    <h2>On your Planning turn</h2>
+    <ol>
+        <li><strong>Draw & Roll.</strong> Draw until your hand plus any carried assigned cards equals 5. Roll every available Miner die independently to Sunrise, Morning, Noon, Afternoon, Sunset, or Night.</li>
+        <li><strong>Auto-assign Bandits.</strong> Each ready Bandit die enters its matching Day pool if a legal card can support it. The Crownless King’s owner chooses its Day pool.</li>
+        <li><strong>Assign cards.</strong> Place at most one card in each shift slot. A card can be assigned only where at least one matching common or Bandit die exists.</li>
+        <li><strong>Use optional Planning actions.</strong> Change shifts, take Debt, repay Debt when permitted, or make the once-per-turn gem-to-gold trade.</li>
+        <li><strong>End Planning.</strong> Unassigned common Day dice move to Night. Unassigned Bandit dice return to their owner’s Bandit area.</li>
+    </ol>
+    <div class="grid-2">
+        <div class="card"><h3>Shift Change</h3><p>Pay 1💰 to move a selected common die from one shift pool to another legal shift. The action is enabled whenever the player has at least 1💰.</p></div>
+        <div class="card"><h3>Free trade</h3><p>Once per turn, choose any 3 real gems—same or different—and gain 1💰. The button disables after use and resets on the player’s next turn.</p></div>
+    </div>
+    <h2 style="margin-top:5mm">Important Planning rules</h2>
+    <ul>
+        <li>A card remains assigned even if all dice are moved from its pool to Night.</li>
+        <li>A Bandit cannot auto-assign to a card that is already on its Night side.</li>
+        <li>Bandit and common dice can share a pool, but every die still needs a printed action space.</li>
+        <li>Base cards always remain in the player’s possession. They cannot enter sale or retirement choices.</li>
+        <li>Undo returns assigned cards to the hand and restores free actions, resources, dice, and logs to their prior state.</li>
+    </ul>
+    <div class="callout example"><strong>Example:</strong> Mira rolls two Morning dice, one Sunset die, and two Night dice. She may assign one Morning card and one Sunset card. Both Morning dice share that card’s pool; they do not create extra actions beyond the spaces printed on the card.</div>
+    <div class="folio"><span>PLANNING</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">05 · Phase rules</div><h1>DAY PHASE</h1><div class="rule"></div>
+    <p class="lead">Resolve the five Day shifts in order. Only dice in the current shift pool may activate that card’s Day actions.</p>
+    <h2>Taking a Day turn</h2>
+    <ol>
+        <li>Select a legal common or Bandit die from the current pool.</li>
+        <li>Choose the next legal action space or linked group on that card.</li>
+        <li>Confirm enough matching dice and board spaces exist.</li>
+        <li>Place one marker per action space, spend one die per action space, and resolve printed effects left to right.</li>
+        <li>Resolve the Operation’s mandatory choice, then its optional additional action.</li>
+        <li>Continue with other available actions or press END/PASS.</li>
+    </ol>
+    <div class="grid-2">
+        <div>
+            <h3>Unlinked actions</h3><p>Each space is independent. Using one does not consume later spaces, but later spaces stay locked until earlier spaces are resolved in order.</p>
+            <h3>Linked actions</h3><p>All connected spaces resolve together. Place every marker and spend every required die. A Bandit die used in a linked group still requires the remaining common dice.</p>
+        </div>
+        <div>
+            <h3>Action versus benefit</h3><p>A printed Operation name performs that Operation. A printed Gold, Prestige, or gem benefit grants only that benefit, even though its marker is placed in the Operation row.</p>
+            <h3>Board capacity</h3><p>Never highlight or choose an action if the destination row lacks enough empty spaces for the full action group.</p>
+        </div>
+    </div>
+    <h2 style="margin-top:5mm">Mining</h2>
+    <p>Gain the gems printed on the card, plus applicable board-space, presence, Tool, and Bandit bonuses. If an action grants Any gems, choose each color. Linked mining actions combine all printed production and bonuses before the action is logged.</p>
+    <div class="callout example"><strong>Example:</strong> An Azure Syndicate Bandit and a common Miner activate two linked blue mining spaces showing 3 and 4 Blue. The guild adds +1 Blue and one existing friendly marker adds the applicable presence bonus. Resolve the entire linked group once, then record the complete gain.</div>
+    <h2>Finishing a shift</h2>
+    <p>When a player has no legal actions left, PASS blinks. Any unused common dice from that Day pool move to Night. Unused Bandit dice return to the player’s Bandit area. Continue until every player is finished, then advance to the next Day shift.</p>
+    <div class="folio"><span>DAY PHASE</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">06 · Five operations</div><h1>OPERATIONS</h1><div class="rule"></div>
+    <div class="grid-2">
+        <div class="card"><div class="icon-row"><img class="op-icon" src="_operation_icons/bank_icon.png"><h2 style="margin:0">Bank</h2></div><p>Buy one affordable Contract or Tool. Contracts cost their printed gems and immediately grant Gold and Prestige. Tools cost printed Gold and grant immediate Prestige plus a permanent modifier.</p><p>Bank reputation modifiers apply to the card’s main action. Tool prices are not modified by Reputation. A shuffle Tool gives one optional shuffle per Bank visit; buying remains available whether or not it is used.</p></div>
+        <div class="card"><div class="icon-row"><img class="op-icon" src="_operation_icons/bandit_icon.png"><h2 style="margin:0">Bandit Guilds</h2></div><p>Buy one Bandit. A normal guild member costs 5 gems of its guild color, plus 1 matching gem for every Bandit of that guild already owned, then apply the played card, Reputation, Tool, and Bandit modifiers.</p><p>The Crownless King costs 8 Any gems and requires at least 3 other Bandits.</p></div>
+        <div class="card"><div class="icon-row"><img class="op-icon" src="_operation_icons/market_icon.png"><h2 style="margin:0">Market</h2></div><p>Buy one of 5 face-up Market cards. Pay its effective Gold cost after the assigned card’s Reputation row, Tools, linked-action benefits, and Bandit modifiers. Put the purchased card on the bottom of your deck.</p><p>A shuffle Tool gives one optional shuffle per Market visit.</p></div>
+        <div class="card"><div class="icon-row"><img class="op-icon" src="_operation_icons/thief_icon.png"><h2 style="margin:0">Thieves Den</h2></div><p>Buy one of 3 face-up Thief cards. Pay its effective Gold and Any-gem cost, choosing every gem spent. Gain the card’s instant Prestige and its numbered Thief die immediately.</p><p>Reputation, Tools, and Azure Syndicate can discount Gold, gems, or a chosen combination as stated.</p></div>
+        <div class="card"><div class="icon-row"><img class="op-icon" src="_operation_icons/tavern_icon.png"><h2 style="margin:0">Tavern</h2></div><p>Draw the number of Tavern missions allowed by the card, Reputation, Tools, and Bandits; choose 1 and return the rest. Tavern missions score at game end.</p><p>The additional action may buy your colored Miner dice or Neutral dice from the 5-die offer at the card’s effective price.</p></div>
+        <div class="card dark"><h3>Additional actions</h3><p>After completing a main Operation, you may use the ⊕ effect printed on that card. Starting cards provide basic versions; Market cards provide stronger, card-specific versions. Additional actions never replace the mandatory main action.</p><p>Typical effects include Bank exchanges, reducing Suspicion, selling a card, buying Traps, and buying Tavern dice.</p></div>
+    </div>
+    <div class="folio"><span>OPERATIONS</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">07 · Risk economy</div><h1>DEBT & REPUTATION</h1><div class="rule"></div>
+    <div class="grid-2">
+        <div>
+            <h2>Debt</h2>
+            <h3>Taking Debt</h3><p>Whenever Gold is needed and the rules permit it, take 1 Debt to gain 1💰 and immediately lose 1⭐. Repeat as necessary.</p>
+            <h3>Repaying Debt</h3><p>Before Moon scoring, pay 2💰 to remove 1 Debt and recover 1⭐. You may repay as many as you can afford.</p>
+            <h3>Unpaid Debt</h3><p>After repayment, lose 1⭐ for every Debt still held. This happens at every Moon, including Moon 4. Debt is therefore cumulative pressure, not only an end-game penalty.</p>
+            <div class="callout warning"><strong>No double penalty:</strong> Debt is not subtracted again during Final Scoring because Moon 4 already applied it.</div>
+        </div>
+        <div>
+            <h2>Reputation track</h2>
+            <table class="compact"><thead><tr><th>Spaces</th><th>Band</th><th>Meaning</th></tr></thead><tbody><tr><td>1–5</td><td style="color:#277446"><strong>Safe</strong></td><td>Lowest suspicion; many honest actions are favorable.</td></tr><tr><td>6–10</td><td style="color:#b17418"><strong>Watched</strong></td><td>Mixed modifiers.</td></tr><tr><td>11–15</td><td style="color:#a64035"><strong>Suspicious</strong></td><td>Riskier economy; some criminal actions improve.</td></tr></tbody></table>
+            <p>Always use the Reputation row on the <strong>assigned card</strong> for the current main action. Starting and Market cards have different, card-specific modifiers.</p>
+            <h3>Maximum suspicion</h3><p>When a player reaches 15, they are exposed: pay 3💰, taking Debt for any missing Gold, then move the Reputation marker to 6 (Watched).</p>
+            <h3>Final Reputation penalty</h3><p>Lose Prestige equal to Reputation minus 1. Position 1 loses 0⭐; position 10 loses 9⭐; position 15 loses 14⭐.</p>
+        </div>
+    </div>
+    <h2>Normal Night suspicion</h2>
+    <table><thead><tr><th>Source</th><th>Starting card</th><th>Market card</th><th>Thief die</th></tr></thead><tbody>
+        <tr><td>First Steal on that card</td><td>+1🔍</td><td>Only when printed; later steals on that card do not repeat it</td><td>No normal suspicion</td></tr>
+        <tr><td>Sabotage the player robbed earlier</td><td>+1🔍</td><td>No normal suspicion</td><td>No normal suspicion</td></tr>
+        <tr><td>Blocked by Trap or Guard</td><td>+2🔍</td><td>+1🔍</td><td>No normal suspicion</td></tr>
+    </tbody></table>
+    <p class="note-small">Card and Thief effects may add separate Suspicion even when normal action suspicion is ignored.</p>
+    <div class="folio"><span>DEBT & REPUTATION</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">08 · Special workers</div><h1>BANDITS</h1><div class="rule"></div>
+    <h2>Buying and owning</h2>
+    <ul>
+        <li>Buying a Bandit adds its card and matching Bandit marker to your permanent collection.</li>
+        <li>Normal cost: <strong>5 guild-colored gems +1 matching gem per Bandit of that guild already owned</strong>, then modifiers.</li>
+        <li>Bandit markers use the guild’s gem color and the owner’s player-color background.</li>
+        <li>A Bandit may be used once per Moon. Used Bandits refresh for the next Moon.</li>
+    </ul>
+    <h2>Planning and placement</h2>
+    <p>On Draw & Roll, each ready Bandit auto-enters its corresponding Day pool when a suitable card is assigned. Select the Bandit before choosing the board action. A Bandit in the card area cannot be placed directly onto the board.</p>
+    <p>A Bandit can activate its matching Mine or its matching Operation. On a linked group, the Bandit pays for one space; every remaining linked space requires another legal die. If action spaces remain after placement, the player may continue using dice before ending the turn.</p>
+    <h2>Active and passive timing</h2>
+    <p>At Start or End of Day, a placed Bandit uses its <strong>Active</strong> line; an unplaced ready Bandit uses its <strong>Passive</strong> line. Resolve confirmation reports in player order. Keep effects protect chosen gems through Night.</p>
+    <h2>End-game guild bonus</h2>
+    <table class="compact"><thead><tr><th>Same guild cards</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td><strong>One-time guild score</strong></td><td>1⭐</td><td>3⭐</td><td>6⭐</td><td>10⭐</td><td>15⭐</td><td>21⭐</td><td>28⭐</td></tr></tbody></table>
+    <div class="card dark"><h3>The Crownless King</h3><p><strong>Requirement:</strong> own at least 3 other Bandits. <strong>Cost:</strong> 8 Any gems after modifiers. Choose its Day pool each Planning phase. Its Mine bonus is +1 gem per owned Bandit; its Operation bonus is +1⭐ per owned Bandit; its Active End-of-Day ability gains +1⭐ per owned Bandit.</p><p>It may be bought from another player’s unassigned Bandit area; payment goes to the Bank. It remains gray regardless of owner. It scores a fixed <strong>15⭐</strong> at game end and does not join another guild set.</p></div>
+    <div class="folio"><span>BANDITS</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">09 · Special workers</div><h1>THIEVES</h1><div class="rule"></div>
+    <h2>Buying and readiness</h2>
+    <ul>
+        <li>Pay the printed Gold and Any-gem cost after modifiers. Choose every Any gem spent.</li>
+        <li>Gain the printed instant Prestige, then add the card and numbered Thief die to your area.</li>
+        <li>At Start of Night, every ready Thief die moves to its owner’s Night pool.</li>
+        <li>To use one, select that Thief die before selecting a legal Guard, Steal, or Sabotage action.</li>
+        <li>After use, return it disabled to its owner’s area. Each Thief die is usable once per Moon.</li>
+        <li>Unused Thief dice return ready after Night. All disabled Thieves refresh at the Moon boundary.</li>
+    </ul>
+    <h2>Three layers of a Thief card</h2>
+    <div class="grid-3">
+        <div class="card"><h3>Passive</h3><p>Works only while that Thief die is ready and unused. Triggered, Start-of-Night, and End-of-Night effects resolve at their named timing.</p></div>
+        <div class="card"><h3>Action bonus</h3><p>Added only when that numbered die performs its preferred Steal, Sabotage, or Guard action.</p></div>
+        <div class="card"><h3>Legacy</h3><p>When using the Thief, count all owned cards of that den, enabled or disabled. Apply the matching 2–3, 4–5, or 6-card tier.</p></div>
+    </div>
+    <h2 style="margin-top:5mm">Legacy end-game Prestige</h2>
+    <p>Every Thief card scores according to the number of cards of its own den you possess:</p>
+    <table class="compact"><thead><tr><th>Cards in that den</th><th>1</th><th>2–3</th><th>4–5</th><th>6</th></tr></thead><tbody><tr><td><strong>Prestige per Thief card</strong></td><td>0⭐</td><td>1⭐</td><td>2⭐</td><td>3⭐</td></tr></tbody></table>
+    <div class="callout"><strong>No normal suspicion:</strong> A Steal or Sabotage performed with any Thief die ignores normal suspicion from using the action, sabotaging the same target, and being blocked by a normal Trap or Guard. Separate card effects may still add Suspicion.</div>
+    <h2>Den identities</h2>
+    <p><strong>Shadow</strong> avoids defense and steals gems. <strong>Rogue</strong> attacks Gold and Prestige. <strong>Trickster</strong> manipulates board Miners after Sabotage. <strong>Guardian</strong> defends and counterattacks. <strong>Smuggler</strong> converts stolen gems. <strong>Phantom</strong> removes presence, Prestige, and Suspicion.</p>
+    <div class="folio"><span>THIEVES</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">10 · Phase rules</div><h1>NIGHT PHASE</h1><div class="rule"></div>
+    <h2>Night turn structure</h2>
+    <ol>
+        <li>Choose one assigned card. You may use actions from <strong>that card only</strong> this turn.</li>
+        <li>Select a common Night die, or first select a ready Thief die.</li>
+        <li>Resolve the next legal Night action or linked group from left to right.</li>
+        <li>Complete all target choices, results, Thief bonuses, and Sabotage bonuses.</li>
+        <li>You may continue with remaining actions on that same card if legal.</li>
+        <li>Press END/PASS. You cannot return to that card on a later Night turn.</li>
+    </ol>
+    <div class="grid-3">
+        <div class="card"><h3>Steal</h3><p>Choose a valid target and attempt to take the printed number of random gems from their bag unless an effect says “open.” Kept gems are excluded.</p></div>
+        <div class="card"><h3>Guard</h3><p>Leave the die on the card. It blocks the next robbery unless ignored. A Guard remains until triggered or Night ends.</p></div>
+        <div class="card"><h3>Sabotage</h3><p>Choose a target, then remove one of that player’s common Miner markers. Bandit markers cannot be sabotaged.</p></div>
+    </div>
+    <h2 style="margin-top:5mm">Card resolution</h2>
+    <p>After all usable actions on an unguarded card finish, choose:</p>
+    <ul><li><strong>Return:</strong> put it on the bottom of your deck.</li><li><strong>Retire:</strong> place it in your Retires for its printed end-game value.</li></ul>
+    <p>Base cards cannot retire and automatically return. A card holding a Guard does not resolve immediately; wait until the Guard is triggered or Night ends, then choose Return or Retire.</p>
+    <h2>End of Night</h2>
+    <ol><li>Resolve all remaining Guards and their card exits.</li><li>Resolve End-of-Night Thief passives, Trickster trades before Phantom effects.</li><li>Return kept gems to their owners.</li><li>Return unused Thief dice ready; used Thief dice remain disabled.</li><li>Return unused common Night dice according to their origin and prepare the next day.</li></ol>
+    <div class="folio"><span>NIGHT PHASE</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">10 · Conflict resolution</div><h1>ROBBERY & SABOTAGE</h1><div class="rule"></div>
+    <h2>Robbery sequence</h2>
+    <ol>
+        <li><strong>Declare target</strong> and calculate the attempted gem count.</li>
+        <li><strong>Apply normal suspicion</strong> unless a Thief die cancels it.</li>
+        <li><strong>Check Guard.</strong> If blocked, steal no gems, apply Guard effects and blocking suspicion, then resolve that Guard card when required.</li>
+        <li><strong>Draw from the target’s bag.</strong> Real gems and Traps are mixed; kept gems are not available.</li>
+        <li><strong>If any Trap is drawn:</strong> discard every drawn Trap, return all drawn real gems to the target, and apply the blocking penalty. The robbery gains no gems.</li>
+        <li><strong>If successful:</strong> transfer the gems, then resolve Thief action and Legacy bonuses.</li>
+    </ol>
+    <div class="callout warning"><strong>Multiple draws, one result:</strong> If a robbery draws several gems and at least one is a Trap, the entire stolen group is returned. Traps are discarded.</div>
+    <h2>Sabotage sequence</h2>
+    <ol>
+        <li>Declare a target who has at least one common Miner on the board.</li>
+        <li>If required, apply suspicion for sabotaging the player robbed earlier.</li>
+        <li>Select and remove one target Miner. This is the standard Sabotage.</li>
+        <li>If a used Thief has a Sabotage Bonus and the current action allows Sabotage, show its instruction, then interact with highlighted legal board choices.</li>
+        <li>Resolve every additional move, swap, placement, removal, Prestige, or Suspicion effect; then end the bonus.</li>
+    </ol>
+    <h2>Presence-only Miners</h2>
+    <p>Markers added by T15, T18, or T35 count only for Moon presence. They do not activate the board space, grant a placement bonus, perform an Operation, or trigger worker abilities.</p>
+    <div class="callout example"><strong>Example:</strong> T13 sabotages a Miner in the Noon Market row. After the standard removal, T13 may move one of the active player’s Miners from either the Noon Mine or Noon Market to any empty space in either Noon row.</div>
+    <div class="folio"><span>ROBBERY & SABOTAGE</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">11 · Every fourth day</div><h1>MOON SCORING</h1><div class="rule"></div>
+    <h2>Resolve in this exact order</h2>
+    <ol>
+        <li><strong>Debt payment window.</strong> Each player may pay 2💰 per Debt to remove it and recover 1⭐.</li>
+        <li><strong>Unpaid Debt penalty.</strong> Lose 1⭐ for each Debt still held.</li>
+        <li><strong>Presence scoring.</strong> Score every Mine and every Operation separately.</li>
+        <li><strong>Snapshot.</strong> On Moon 4, preserve the board for end-game missions before clearing markers.</li>
+        <li><strong>Refresh.</strong> Clear board markers, refresh displays, return protected resources, and ready special dice for the next Moon.</li>
+        <li><strong>New order.</strong> Sort players from least Prestige to most Prestige.</li>
+    </ol>
+    <h2>Presence scoring</h2>
+    <table><thead><tr><th>Result in one section</th><th>Award</th></tr></thead><tbody><tr><td>One player has strictly the most presence</td><td><strong>Solo winner gains 3⭐</strong></td></tr><tr><td>Two, three, or four players tie for most presence</td><td><strong>Every tied winner gains 1⭐</strong></td></tr><tr><td>No markers in the section</td><td>No award</td></tr></tbody></table>
+    <p>Count common Miners, Bandits, and presence-only Miners. A Mine and its corresponding Operation are separate contests.</p>
+    <div class="callout example"><strong>Example:</strong> In Sunrise Mine, Ada has 3 markers, Bor has 2, and Cira has 1. Ada gains 3⭐. In Sunrise Bank, Ada and Bor each have 2; both gain 1⭐.</div>
+    <h2>What refreshes?</h2>
+    <ul>
+        <li>Disabled Bandit and Thief dice become available for the next Moon.</li>
+        <li>Bank, Market, Thief, and Tavern displays refresh according to their supply rules.</li>
+        <li>Player order changes; prior ties reverse relative order.</li>
+        <li>Debt remains until paid and will hurt again next Moon.</li>
+    </ul>
+    <div class="folio"><span>MOON SCORING</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">12 · After Moon 4</div><h1>FINAL SCORING</h1><div class="rule"></div>
+    <p class="lead">Resolve Tavern exchanges first, then total every category. Debt is shown for audit but scores 0 here because Moon 4 already penalized it.</p>
+    <table><thead><tr><th>Category</th><th>Scoring</th></tr></thead><tbody>
+        <tr><td><strong>Current Prestige</strong></td><td>Your Prestige track after Moon 4.</td></tr>
+        <tr><td><strong>Retired cards</strong></td><td>Add each Market retire value; each retired non-Base Starting card is −1⭐.</td></tr>
+        <tr><td><strong>Bandits</strong></td><td>Score each guild once: 1/3/6/10/15/21/28⭐ for 1–7 cards. Add 15⭐ for the Crownless King.</td></tr>
+        <tr><td><strong>Thieves</strong></td><td>Each card scores 0/1/2/3⭐ when its den count is 1 / 2–3 / 4–5 / 6.</td></tr>
+        <tr><td><strong>Tavern</strong></td><td>Resolve every mission’s success or failure. Exchange costs remove resources before resource scoring.</td></tr>
+        <tr><td><strong>Gold</strong></td><td>After Tavern exchanges, gain 1⭐ per 2💰, rounded down.</td></tr>
+        <tr><td><strong>Gem sets</strong></td><td>After Tavern exchanges, gain 1⭐ per complete set of 1 Yellow, Green, Red, Blue, and Violet.</td></tr>
+        <tr><td><strong>Debt</strong></td><td>0⭐ here; already penalized at Moon 4.</td></tr>
+        <tr><td><strong>Reputation</strong></td><td>Lose Reputation position minus 1 in Prestige.</td></tr>
+    </tbody></table>
+    <h2>Tavern resolution order</h2>
+    <p>Resolve normal Tavern missions in owned-card order, spending required Gold and gems. Then resolve zero-resource and comparison missions in this order: TVN18, TVN25, TVN24, TVN33. Finally score remaining Gold and complete gem sets. A resource exchanged for a Tavern mission cannot score again.</p>
+    <div class="callout example"><strong>Gem set example:</strong> After exchanges, a player has Yellow 9, Green 6, Red 8, Blue 4, Violet 7. The smallest pile is Blue 4, so the player has 4 complete sets and gains 4⭐.</div>
+    <h2>Winner and ties</h2>
+    <p>The highest total Prestige wins. The digital prototype breaks equal totals by more Gold in the final supply record, then less Debt, then player-seat order.</p>
+    <div class="card dark"><h3>Audit tools</h3><p>Final INFO lists every scoring source. Prestige History shows when points changed. Game Statistics records peaks and play time. Game Analysis compares action use, economy flow, and scoring drivers.</p></div>
+    <div class="folio"><span>FINAL SCORING</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">13 · Digital prototype</div><h1>PLAY MODES & CONTROLS</h1><div class="rule"></div>
+    <div class="grid-2">
+        <div class="card"><h3>Shared Screen</h3><p>Two to four players use one computer. Enter custom names and optionally mark any seat as a Bot. Pass control to the active player and avoid looking at private hands or resources.</p></div>
+        <div class="card"><h3>Shared Network</h3><p>Players use separate computers on the same Wi-Fi/LAN. The Host creates a lobby; other players join with the shown address and 5-character room code. The Host starts when 2–4 seats are connected.</p></div>
+    </div>
+    <h2 style="margin-top:5mm">Network privacy and authority</h2>
+    <ul>
+        <li>Only the active player’s device can send game actions. The Host validates and resolves them.</li>
+        <li>Each player sees their own hand, deck information, resources, Reputation, Debt, traps, and owned cards.</li>
+        <li>Opponents see only public Prestige in their statistics area.</li>
+        <li>Cards become public when assigned to Day or Night pools.</li>
+        <li>Phase transitions and choice ownership synchronize to all devices.</li>
+    </ul>
+    <h2>Undo</h2>
+    <p>Undo restores the complete game state before the latest action: resources, dice, markers, cards, statistics, pending choices, and logs. It is available during Planning, Day, and Night until the active player presses END/PASS. Undo never reopens a resolved gem-choice popup as a new action.</p>
+    <h2>Bot priorities</h2>
+    <p>Bots follow deterministic test priorities: operations before mines, linked actions first, Bandits before common dice, same-guild and same-den purchases, highest-Prestige Night targets, debt payment when affordable, and lowest-held gem color for Any choices. Bots retire eligible cards rather than return them.</p>
+    <h2>Portable application</h2>
+    <p>Launch <strong>RogueMiners.exe</strong> or <strong>RogueMiners-Portable.exe</strong>. The application starts a local server and opens fullscreen. The Host should allow Windows Firewall access on Private networks. Use EXIT to close the application and server cleanly.</p>
+    <div class="callout warning"><strong>Connection rule:</strong> Joiners must use the Host’s LAN address—not 127.0.0.1—and the exact room code shown in the Host lobby.</div>
+    <div class="folio"><span>DIGITAL PLAY</span><span class="num"></span></div>
+</section>
+
+<section class="page">
+    <div class="eyebrow">Quick reference</div><h1>ICON & TIMING GLOSSARY</h1><div class="rule"></div>
+    <div class="grid-2">
+        <div>
+            <div class="term"><b>Action space</b><span>One printed card space. Usually costs one die and one board space.</span></div>
+            <div class="term"><b>Active player</b><span>The only player currently permitted to make game choices.</span></div>
+            <div class="term"><b>Any gem</b><span>A real gem color chosen by the payer or receiver.</span></div>
+            <div class="term"><b>Base card ⚙</b><span>RP01–RP05; permanent and never sold or retired.</span></div>
+            <div class="term"><b>Card pool</b><span>An assigned card plus all dice allocated to its shift.</span></div>
+            <div class="term"><b>Common die</b><span>A player-colored or Neutral Miner die, not a Bandit or Thief.</span></div>
+            <div class="term"><b>Keep 🔒</b><span>Protect a chosen gem from theft until Night ends.</span></div>
+            <div class="term"><b>Linked ⛓</b><span>Connected spaces paid and resolved as one group.</span></div>
+        </div>
+        <div>
+            <div class="term"><b>Presence</b><span>Number of your markers in one Mine or Operation section.</span></div>
+            <div class="term"><b>Ready</b><span>A special die that has not been used this Moon.</span></div>
+            <div class="term"><b>Retire</b><span>Remove an eligible played card from cycling and score its retire value at game end.</span></div>
+            <div class="term"><b>Return</b><span>Put a resolved card on the bottom of its owner’s deck.</span></div>
+            <div class="term"><b>Section</b><span>One Day transition’s Mine and Operation rows together.</span></div>
+            <div class="term"><b>Trap 🪤</b><span>A black token in a gem bag. It is never a gem.</span></div>
+            <div class="term"><b>Turn</b><span>One player’s uninterrupted opportunity before END/PASS.</span></div>
+            <div class="term"><b>Visit</b><span>Resolving a named Operation on the board; many Tool effects are once per visit.</span></div>
+        </div>
+    </div>
+    <h2 style="margin-top:6mm">Fast phase checklist</h2>
+    <table class="compact"><thead><tr><th>Planning</th><th>Day</th><th>Night</th><th>Moon</th></tr></thead><tbody><tr><td>Draw to capacity<br>Roll each die<br>Auto-assign Bandits<br>Assign cards<br>Move leftovers</td><td>Current shift only<br>Left to right<br>Pay all linked dice<br>Main action first<br>Press END/PASS</td><td>One card per turn<br>Select special die first<br>Guard / Steal / Sabotage<br>Return or Retire<br>Resolve Guards</td><td>Pay Debt<br>Penalize Debt<br>Score presence<br>Refresh<br>Reorder players</td></tr></tbody></table>
+    <h2>Rules questions</h2>
+    <p>If a choice is legal in the prototype, highlighted targets are authoritative. If physical play produces an unresolved edge case, apply the Golden Rules, choose the interpretation that completes the current action with the fewest extra effects, and note it for post-game review.</p>
+    <div class="folio"><span>GLOSSARY</span><span class="num"></span></div>
+</section>
+
+<section class="page" id="bank-tools-page">
+    <div class="eyebrow">Appendix A</div><h1>BANK TOOL REFERENCE</h1><div class="rule"></div>
+    <p class="lead">Tools are permanent. Their purchase price is not changed by Reputation. Tool Prestige is gained immediately.</p>
+    <div id="bank-tools-table"></div>
+    <div class="callout"><strong>Stacking:</strong> Tool effects combine with the assigned card, Reputation, Bandits, and linked benefits unless the card says otherwise. Shuffle is optional and usable once per matching visit.</div>
+    <div class="folio"><span>APPENDIX A · BANK TOOLS</span><span class="num"></span></div>
+</section>
+
+<section class="page" id="bandit-reference-page">
+    <div class="eyebrow">Appendix B</div><h1>BANDIT GUILD REFERENCE</h1><div class="rule"></div>
+    <div id="bandit-reference"></div>
+    <h2>Shared guild scoring</h2>
+    <table class="compact"><thead><tr><th>Cards</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th></tr></thead><tbody><tr><td>Prestige</td><td>1</td><td>3</td><td>6</td><td>10</td><td>15</td><td>21</td><td>28</td></tr></tbody></table>
+    <div class="folio"><span>APPENDIX B · BANDITS</span><span class="num"></span></div>
+</section>
+
+<div id="thief-appendix"></div>
+<div id="tavern-appendix"></div>
+
+<script src="_data/bandit_cards_data.js"></script>
+<script src="_data/bank_contracts_data.js"></script>
+<script src="_data/thief_cards_data.js"></script>
+<script src="_data/tavern_cards_data.js"></script>
+<script>
+    const esc = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+    const pageFooter = label => `<div class="folio"><span>${label}</span><span class="num"></span></div>`;
+
+    const toolRows = [];
+    for (const [tier, tiles] of Object.entries(window.BANK_CONTRACT_POOLS_DATA || {})) {
+        const seen = new Set();
+        for (const tile of tiles.filter(entry => entry.kind === "tool")) {
+            const key = `${tile.effect.target}|${tile.effect.text}|${tile.goldCost}|${tile.prestige}`;
+            if (seen.has(key)) continue;
+            seen.add(key);
+            toolRows.push(`<tr><td><strong>${esc(tier.toUpperCase())}</strong></td><td>${tile.goldCost}💰</td><td>+${tile.prestige}⭐</td><td>${esc(tile.effect.target)}</td><td>${esc(tile.effect.text)}</td></tr>`);
+        }
+    }
+    document.getElementById("bank-tools-table").innerHTML = `<table class="compact"><thead><tr><th>Tier</th><th>Cost</th><th>Instant</th><th>Target</th><th>Effect</th></tr></thead><tbody>${toolRows.join("")}</tbody></table>`;
+
+    const guildColor = {"IRON WOLVES":"#a64035","DEEP ROOTS":"#277446","AZURE SYNDICATE":"#315b9b","GILDED HAND":"#b88917","NIGHT VEIL":"#74428d","THE CROWNLESS KING":"#555b66"};
+    document.getElementById("bandit-reference").innerHTML = (window.BANDIT_MARKET_DATA || []).map(guild => `<div class="appendix-card" style="border-left:2mm solid ${guildColor[guild.guild] || '#555'};margin-bottom:2.4mm"><h3>${esc(guild.guild)}</h3><p><strong>Mine:</strong> ${esc(guild.mining)} · <strong>Operation:</strong> ${esc(guild.action)}</p><p><strong>Active:</strong> ${esc(guild.active.replace(/^Active:\s*/i,''))} · <strong>Passive:</strong> ${esc(guild.passive.replace(/^Passive:\s*/i,''))}</p><p><strong>Cost:</strong> ${guild.key === 'crownless-king' ? '8 Any gems; requires 3 other Bandits' : `5 ${esc(guild.css)} gems +1 per owned ${esc(guild.guild)}`}</p></div>`).join("");
+
+    const thiefTypes = window.THIEF_CARD_TYPES || [];
+    const thiefCards = window.THIEF_CARD_POOL_DATA || [];
+    for (const type of thiefTypes) {
+        const cards = thiefCards.filter(card => card.thiefType === type);
+        const first = cards[0] || {};
+        const body = `<div class="card dark" style="margin-bottom:3mm"><h3>${esc(type)} DEN</h3><p><strong>Passive:</strong> ${esc(first.passive || '')}</p><p><strong>Legacy:</strong> ${(first.legacy || []).map(entry => `${esc(entry.cards)} cards: ${esc(entry.ability)} and ${entry.endGamePrestige}⭐ per card`).join(' · ')}</p></div><div class="appendix-grid thief-grid">${cards.map(card => `<div class="appendix-card"><h3>${esc(card.id)} · ${esc(card.name)}</h3><p><strong>${esc((card.stealAction || 'Action Bonus').split(':')[0])}:</strong> ${esc((card.stealAction || '').split(':').slice(1).join(':').trim())}</p><p><strong>Cost:</strong> ${(card.cost?.any || 0)} Any gems + ${(card.cost?.gold || 0)}💰 · <strong>Instant:</strong> +${card.instantPrestige || 0}⭐</p></div>`).join('')}</div>`;
+        document.getElementById("thief-appendix").insertAdjacentHTML("beforeend", `<section class="page"><div class="eyebrow">Appendix C · Thief Dens</div><h1>${esc(type)}</h1><div class="rule"></div>${body}${pageFooter('APPENDIX C · THIEVES')}</section>`);
+    }
+
+    const tavernCards = window.TAVERN_CARD_DECK_DATA || [];
+    for (let start = 0; start < tavernCards.length; start += 6) {
+        const slice = tavernCards.slice(start, start + 6);
+        const pageNo = Math.floor(start / 6) + 1;
+        const cards = slice.map(card => `<div class="appendix-card"><h3>${esc(card.id)} · ${esc(card.name)}</h3><p><span class="tag threshold">Threshold</span> ${esc(card.threshold)}</p><p><span class="tag success">Success</span> ${esc(card.success)}</p><p><span class="tag failure">Failure</span> ${esc(card.failure)}</p></div>`).join('');
+        document.getElementById("tavern-appendix").insertAdjacentHTML("beforeend", `<section class="page"><div class="eyebrow">Appendix D · Tavern Missions ${pageNo}/6</div><h1>TAVERN MISSIONS</h1><div class="rule"></div><div class="tavern-grid">${cards}</div>${pageFooter('APPENDIX D · TAVERN MISSIONS')}</section>`);
+    }
+
+    const previewPage = parseInt(new URLSearchParams(location.search).get("page"), 10);
+    if (previewPage > 0) {
+        const selectedPage = [...document.querySelectorAll(".page")][previewPage - 1];
+        if (selectedPage) document.body.replaceChildren(selectedPage);
+        document.body.style.background = "#1a1b20";
+    }
+</script>
+</body>
+</html>
